@@ -31,10 +31,10 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                         <!-- Opciones según el tipo de usuario -->
                         <div class="botones-header">
                             <li><button onclick="location.href='index.php'">Inicio</button></li>
-                            <?php if ($tipoDeUsuario === 'Admin'): ?>
+                            <?php if ($tipoDeUsuario === 'Administrador'): ?>
                                 <!-- Opciones para Administrador -->
                                 <li><button onclick="location.href='index.php?c=Admin&f=dashboard'">Dashboard Admin</button></li>
-                                <li><button onclick="location.href='index.php?c=Admin&f=manageUsers'">Gestionar Usuarios</button></li>
+                                <li><button onclick="location.href='index.php?c=Admin&f=manageUsers'">Gestionar Rutas</button></li>
                             <?php elseif ($tipoDeUsuario === 'Empresa'): ?>
                                 <!-- Opciones para Empresa -->
                                 <li><button onclick="location.href='index.php?c=Empresa&f=manage'">Gestionar Empresa</button></li>
@@ -42,7 +42,7 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                             <?php else: ?>
                                 <!-- Opciones para Usuario Normal -->
                                 <li><button onclick="location.href='index.php?c=Usuario&f=perfil'">Mi Perfil</button></li>
-                                <li><button onclick="location.href='index.php?c=Usuario&f=misReciclajes'">Mis Reciclajes</button></li>
+                                <li><button onclick="location.href='index.php?c=Usuario&f=misReciclajes'">Rutas de Recoleccion</button></li>
                             <?php endif; ?>
                             <!-- Botón para cerrar sesión -->
                             <li><button onclick="location.href='index.php?c=Usuario&f=logout'">Cerrar Sesión</button></li>
