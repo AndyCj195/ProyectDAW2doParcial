@@ -1,40 +1,17 @@
-<?php
-/*require_once 'UsuarioDAO.php';
-require_once 'UsuarioDTO.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombres = $_POST['nombres'];
-    $correo = $_POST['correo'];
-    $cedula = $_POST['cedula'];
-    $telefono = $_POST['telefono'];
-    $direccion = $_POST['direccion'];
-    $tipoDeUsuario = $_POST['tipoDeUsuario'];
-    $contraseña = $_POST['contraseña'];
-
-    $usuarioDAO = new UsuarioDAO();
-    $usuarioDTO = new Usuario ($nombres, $correo, $cedula, $telefono, $direccion, $tipoDeUsuario, "Activo");
-
-    // Insertar el usuario con contraseña hasheada
-    if ($usuario->insert($usuarioDTO, $contraseña)) {
-        echo "Usuario registrado con éxito.";
-    } else {
-        echo "Error al registrar el usuario.";
-    }
-}*/
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/forms.css">
     <title>Registro de Usuario</title>
 </head>
 <body>
     <main>
     <div id="div-main">
         <div>
-            <img src="assets/img/logo.png" alt="Logo" style="width: 200px;">
+            <img class="div_logo_header" src="https://pbs.twimg.com/media/GbtRafJW4BEozsZ?format=png&name=small" alt="logo">
+        </div>
         </div>
         <div id="formulario">
             <div class="titulo" style="color: #2e7d32;">
