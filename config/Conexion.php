@@ -7,7 +7,6 @@
                 try{
                     $conexion = new PDO($dsn, DB_USER, DB_PASS);
                     $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    echo "Conexión exitosa";
                     return $conexion;
                 }catch(Exception $e){
                     die("El error de Conexión es: ". $e->getMessage());

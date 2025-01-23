@@ -15,12 +15,58 @@ class UsuarioController{
         require_once VUSUARIO.'register.php';
     }
 
+
+    public function login() {
+        session_start();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $correo = $_POST['correo'] ?? null;
+        $contrasena = $_POST['contrasena'] ?? null;
+
+        if (empty($correo) || empty($contrasena)) {
+            echo "Correo o contraseña no pueden estar vacíos.";
+            return;
+        }
+
+        try {
+            // Verifica si el usuario existe
+            $usuario = $this->model->login($correo, $contrasena);
+
+            if ($usuario) {
+                // Configura la sesión con los datos del usuario
+                $_SESSION['usuarioId'] = $usuario['id'];
+                $_SESSION['nombreUsuario'] = $usuario['nombres'];
+                $_SESSION['tipoDeUsuario'] = $usuario['tipoDeUsuario'];
+                
+                echo "Inicio de sesión exitoso. Bienvenido, " . $_SESSION['nombreUsuario'];
+                header("Location: index.php"); // Redirige al inicio
+                exit;
+            } else {
+                echo "Correo o contraseña incorrectos.";
+            }
+        } catch (Exception $ex) {
+            echo "Error en el login: " . $ex->getMessage();
+        }
+        }
+    }
+
+    public function logout() {
+        session_start();
+        // Elimina las variables de sesión
+        session_unset();
+        // Destruye la sesión
+        session_destroy();
+        // Redirige al inicio
+        header("Location: index.php");
+    }
+
     public function register(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuarioDTO = $this->populate();
             // Insertar el usuario con contraseña hasheada
             if ($this->model->insertUser($usuarioDTO, $usuarioDTO->getContrasena())) {
                 echo "Usuario registrado con éxito.";
+                header('Location: index.php?c=index&f=index&p=login');
             } else {
                 echo "Error al registrar el usuario.";
             }

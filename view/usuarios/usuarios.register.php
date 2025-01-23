@@ -31,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Registro de Usuario</title>
 </head>
 <body>
-    <header>
-
-    </header>
     <main>
     <div id="div-main">
+        <div>
+            <img src="assets/img/logo.png" alt="Logo" style="width: 200px;">
+        </div>
         <div id="formulario">
             <div class="titulo" style="color: #2e7d32;">
                 <h1>Registro de Usuario</h1>
@@ -94,13 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="div-contra2">
                                 <label for="idContrasena2">Confirmar Contraseña:</label><br>
-                                <input type="password" id="idContrasena2" name="contrasena2">
+                                <input type="password" id="idContrasena2" name="contrasena">
                                 <div class="error-message" id="error-contrasena2"></div>
                             </div>
                         </div>
                         <div>
                             <button type="submit" id="btn-registrar">Registrar</button>
-                            <button onclick="window.location.href='index.php?c=index&f=index&p=login'">Cancelar</button>
+                            <button type="button" onclick="window.location.href='index.php?c=index&f=index&p=login'">Cancelar</button>
                         </div>
                     </div>
                 </form>
