@@ -2,7 +2,7 @@
 require_once 'model/dto/Materiales.php';
 require_once 'model/dao/MaterialesDAO.php';
 
-class MaterialesController
+class GestionMaterialesController
 {
     private $model;
 
@@ -98,7 +98,7 @@ class MaterialesController
     // Popula un objeto Material
     public function populate() {
         $material = new Materiales();
-        $material->setId(htmlentities($_POST['id'] ?? null)); // Puede ser null al insertar
+        $material->setId(htmlentities($_POST['id'] ?? null)); 
         $material->setTipoDeMateriales(htmlentities($_POST['tipoDeMateriales']));
         $material->setCantidadTotalKg(htmlentities($_POST['cantidadTotalKg']));
         $material->setEstadoDelMaterial(htmlentities($_POST['estadoDelMaterial']));
