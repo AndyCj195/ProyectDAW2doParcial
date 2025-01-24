@@ -2,7 +2,7 @@
 require_once 'model/dto/Materiales.php';
 require_once 'model/dao/MaterialesDAO.php';
 
-class GestionMaterialesController
+class MaterialesController
 {
     private $model;
 
