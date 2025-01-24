@@ -108,7 +108,7 @@ class RutasRecoleccionDAO {
         }
     }
 
-    // Eliminar una ruta por su ID
+    // Eliminar una ruta por su ID 54696598
     public function delete($id) {
         try {
             $query = "DELETE FROM RutasRecoleccion WHERE id = :id";
