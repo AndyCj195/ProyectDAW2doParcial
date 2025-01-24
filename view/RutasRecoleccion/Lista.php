@@ -1,6 +1,5 @@
 <?php
-// Archivo: view/RutasRecoleccion/index.php
-// Llama al controlador para obtener todas las rutas
+// Autor: CESAR XAVIER VILLACIS ALVIA
 require_once 'controller/RutasController.php';
 
 $rutasController = new RutasController();

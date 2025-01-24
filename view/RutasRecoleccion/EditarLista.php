@@ -1,6 +1,5 @@
 <?php
-// Archivo: view/RutasRecoleccion/edit.php
-// Llama al controlador para obtener la ruta específica
+// Autor: CESAR XAVIER VILLACIS ALVIA
 require_once 'controller/RutasController.php';
 
 $rutasController = new RutasController();

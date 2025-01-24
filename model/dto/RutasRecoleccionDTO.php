@@ -1,4 +1,5 @@
 <?php
+//autor: CESAR XAVIER VILLACIS ALVIA
 class RutasRecoleccionDTO {
     private $id;
     private $FechaDeRecoleccion;
