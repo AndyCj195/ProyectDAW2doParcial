@@ -26,6 +26,7 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                         <div id="botones-registro">
                             <li><button onclick="location.href='index.php?c=Usuario&f=index'">Registrarse</button></li>
                             <li><button onclick="location.href='index.php?c=index&f=index&p=login'">Iniciar Sesión</button></li>
+                            <li><button onclick="location.href='index.php?c=Materiales&f=new'">Crear Nuevo Material</button></li>
                         </div>
                     <?php else: ?>
                         <!-- Opciones según el tipo de usuario -->
@@ -35,6 +36,7 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                                 <!-- Opciones para Administrador -->
                                 <li><button onclick="location.href='index.php?c=Admin&f=dashboard'">Dashboard Admin</button></li>
                                 <li><button onclick="location.href='index.php?c=Admin&f=manageUsers'">Gestionar Usuarios</button></li>
+                                
                             <?php elseif ($tipoDeUsuario === 'Empresa'): ?>
                                 <!-- Opciones para Empresa -->
                                 <li><button onclick="location.href='index.php?c=Empresa&f=manage'">Gestionar Empresa</button></li>

@@ -13,6 +13,10 @@ define("FOOTER","view/templates/footer.php");
 define("VUSUARIO","view/usuarios/usuarios.");
 
 
+//rutas de vistas modulo materiales
+define("VMATERIALES","view/usuarios/usuarios.");
+
+
 //conexion a la base de datos
 define("DB_NAME","daw_dbproyecto");
 define("DB_USER","root");
