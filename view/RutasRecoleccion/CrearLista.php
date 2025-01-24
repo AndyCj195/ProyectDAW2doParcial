@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/forms.css">
     <title>Crear Nueva Ruta</title>
+    <!-- Autor: Cesar Xavier Villacis Alvia -->
 </head>
 <body>
     <h1>Crear Nueva Ruta de Recolección</h1>
