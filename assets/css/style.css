@@ -14,7 +14,7 @@ body{
     font-family: Arial, sans-serif;
     background-color: #E8F5E9;
 }
-#header{
+header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,18 +23,17 @@ body{
     color: white;
 }
 
-
 .header-logo img{
       width: 100px;
       height: 100px;
 }
+
 #botones-registro{
     display: flex;
     gap: 20px;
-    justify-content: end;
-    margin-bottom: 20px;
+    justify-content: flex-end;
 }
-#botones-registro a{
+#botones-registro button{
     padding: 10px 20px;
     background-color: #6d9f71;
     color: white;
@@ -44,36 +43,56 @@ body{
     transition: 0.5s;
     text-decoration: none;
 }
-#botones-registro a:nth-child(1){
+#botones-registro button:nth-child(1){
     margin-right: 20px;
     text-decoration: underline;
     
 }
-#botones-registro a:nth-child(2){
+#botones-registro button:nth-child(2){
     color: #6d9f71;
     background-color: white;
     border: 1px solid white;
     border-radius: 10px;
 }
 
-#botones-registro a:hover:nth-child(1){
+#botones-registro button:hover:nth-child(1){
     background-color: #5b815e;
     border: 1px solid #5b815e;
     color: #e4e4e4;
 }
-#botones-registro a:hover:nth-child(2){
+#botones-registro button:hover:nth-child(2){
     background-color: #e6e6e6;
     border: 1px solid #e6e6e6;
     color: #6d9f71;
 }
 
 
-
-.botones-header{
+nav .menu {
+    list-style: none;
     display: flex;
+    gap: 50px;
+    margin: 0;
+    padding: 0;
+}
+nav .menu li {
+    display: inline;
+}
+.menu > li a{
+    color: white;
+    text-decoration: none;
+    padding: 10px 0px;
+    transition: 0.5s;
+}
+.menu > li a:hover{
+      color: blue;
+}
+
+
+.header-botones{
+    display: grid;
     gap: 20px;
 }  
-.botones-header a{
+.header-botones button{
     padding: 10px 20px;
     background-color: #6d9f71;
     color: white;
@@ -83,7 +102,7 @@ body{
     transition: 0.5s;
 }
 
-.botones-header a:hover{
+.header-botones button:hover{
     background-color: #5b815e;
     border: 1px solid #5b815e;
     color: #e4e4e4;
