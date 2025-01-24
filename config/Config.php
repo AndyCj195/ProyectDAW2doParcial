@@ -14,7 +14,7 @@ define("VUSUARIO","view/usuarios/usuarios.");
 
 
 //rutas de vistas modulo materiales
-define("VMATERIALES","view/usuarios/usuarios.");
+define("VMATERIALES","view/gestionmateriales/materiales.");
 
 
 //conexion a la base de datos

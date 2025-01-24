@@ -1,7 +1,7 @@
 <div class="container">
     <h2><?php echo 'Crear nuevo material'; ?></h2>
     <div class="card card-body">
-        <form action="index.php?c=gestionmateriales&f=nuevo" method="POST" name="formMaterialNuevo" id="formMaterialNuevo">
+        <form action="index.php?c=Materiales&f=new" method="POST" name="formMaterialNuevo" id="formMaterialNuevo">
             <div class="form-row">
                 <!-- Tipo de Material -->
                 <div class="form-group col-sm-6">
@@ -40,7 +40,7 @@
                 <!-- Botones de acción -->
                 <div class="form-group mx-auto">
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="index.php?c=gestionmateriales&f=index" class="btn btn-secondary">Cancelar</a>
+                    <a href="index.php?c=Materiales&f=index" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>

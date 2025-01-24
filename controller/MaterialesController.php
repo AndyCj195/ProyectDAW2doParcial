@@ -29,13 +29,13 @@ class MaterialesController
     public function delete(){
         $id = htmlentities($_REQUEST['id'] ?? "");
         $exito = $this->model->logicalDelete($id);
-        $this->redirectWithMessage($exito, "Material eliminado exitosamente", "No se pudo realizar la eliminación", "index.php?c=gestionmateriales&f=index");
+        $this->redirectWithMessage($exito, "Material eliminado exitosamente", "No se pudo realizar la eliminación", "index.php?c=Materiales&f=index");
     }
 
     // Muestra la vista para crear un nuevo material
     public function view_new(){
         $titulo = "Nuevo material";
-        require_once VMATERIALES . 'nuevo.php';
+        require_once VMATERIALES . 'new.php';
     }
 
     // Crea un nuevo material
@@ -43,17 +43,17 @@ class MaterialesController
         if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $_SESSION["mensaje"] = "Método no permitido";
             $_SESSION["color"] = "danger";
-            header("Location: index.php?c=gestionmateriales&f=index");
+            header("Location: index.php?c=Materiales&f=index");
         }
         if (empty($_POST["descripcion"]) || empty($_POST["cantidad"])) {
             $_SESSION["mensaje"] = "Datos incompletos";
             $_SESSION["color"] = "danger";
-            header("Location: index.php?c=gestionmateriales&f=index");
+            header("Location: index.php?c=Materiales&f=index");
         }
 
         $material = $this->populate();
         $exito = $this->model->insert($material);
-        $this->redirectWithMessage($exito, "Material insertado exitosamente", "No se pudo realizar la inserción", "index.php?c=gestionmateriales&f=index");
+        $this->redirectWithMessage($exito, "Material insertado exitosamente", "No se pudo realizar la inserción", "index.php?c=Materiales&f=index");
     }
 
     // Muestra la vista para editar un material

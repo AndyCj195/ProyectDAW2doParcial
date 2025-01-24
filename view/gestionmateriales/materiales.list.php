@@ -19,7 +19,7 @@
 
         <!-- Botón para añadir nuevo -->
         <div class="col-sm-6 d-flex flex-column align-items-end">
-            <a href="index.php?c=gestionmateriales&f=view_new">
+            <a href="index.php?c=Materiales&f=view_new">
                 <button type="button" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Nuevo
                 </button>
