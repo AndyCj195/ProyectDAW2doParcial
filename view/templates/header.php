@@ -15,7 +15,7 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
     </head>
     <body>
         <div id="id_container">
-        <header>
+        <header id="header">
             <nav>
                 <ul class="header-logo">
                     <img class="div_logo_header" src="https://pbs.twimg.com/media/GbtRafJW4BEozsZ?format=png&name=small" alt="logo">
@@ -24,9 +24,18 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                     <?php if ($tipoDeUsuario === null): ?>
                         <!-- Opciones para usuarios no autenticados -->
                         <div id="botones-registro">
-                            <li><button onclick="location.href='index.php?c=Usuario&f=index'">Registrarse</button></li>
-                            <li><button onclick="location.href='index.php?c=index&f=index&p=login'">Iniciar Sesión</button></li>
+                            <a href="index.php?c=Usuario&f=index">Registrarse</a>
+                            <a href="index.php?c=index&f=index&p=login">Iniciar Sesión</a>
                         </div>
+                        <div id="botones-pagina"> 
+                            <ul class="menu">
+                                <li><a href="index.php">Home</a></li>
+                                <li><a href="index.php?c=index&f=about">Acerca de</a></li>
+                                <li><a href="index.php?c=index&f=contact">Contacto</a></li>
+
+                            </ul>
+                            
+                        </div>  
                     <?php else: ?>
                         <!-- Opciones según el tipo de usuario -->
                         <div class="botones-header">
