@@ -21,4 +21,5 @@ define("VMATERIALES","view/gestionmateriales/materiales.");
 define("DB_NAME","daw_dbproyecto");
 define("DB_USER","root");
 define("DB_PASS","");
+define("DB_port", "3307")
 ?>

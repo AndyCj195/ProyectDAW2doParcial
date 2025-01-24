@@ -1,7 +1,7 @@
 <?php
     class Conexion{
         public static function getConexion(){
-            $dsn = "mysql:host=localhost; dbname=". DB_NAME;
+            $dsn = "mysql:host=localhost; port=".DB_port." dbname=". DB_NAME;
             $conexion = null;
             if(!isset($conexion)){
                 try{
