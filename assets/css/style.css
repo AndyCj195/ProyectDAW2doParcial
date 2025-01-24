@@ -14,7 +14,7 @@ body{
     font-family: Arial, sans-serif;
     background-color: #E8F5E9;
 }
-header{
+#header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,7 +34,7 @@ header{
     justify-content: end;
     margin-bottom: 20px;
 }
-#botones-registro button{
+#botones-registro a{
     padding: 10px 20px;
     background-color: #6d9f71;
     color: white;
@@ -42,56 +42,38 @@ header{
     border-radius: 5px;
     cursor: pointer;
     transition: 0.5s;
+    text-decoration: none;
 }
-#botones-registro button:nth-child(1){
+#botones-registro a:nth-child(1){
     margin-right: 20px;
     text-decoration: underline;
     
 }
-#botones-registro button:nth-child(2){
+#botones-registro a:nth-child(2){
     color: #6d9f71;
     background-color: white;
     border: 1px solid white;
     border-radius: 10px;
-    
 }
 
-#botones-registro button:hover:nth-child(1){
+#botones-registro a:hover:nth-child(1){
     background-color: #5b815e;
     border: 1px solid #5b815e;
     color: #e4e4e4;
 }
-#botones-registro button:hover:nth-child(2){
+#botones-registro a:hover:nth-child(2){
     background-color: #e6e6e6;
     border: 1px solid #e6e6e6;
     color: #6d9f71;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 50px;
-    margin: 0;
-    padding: 0;
-}
-nav ul li {
-    display: inline;
-}
-.menu > li a{
-    color: white;
-    text-decoration: none;
-    padding: 10px 0px;
-    transition: 0.5s;
-}
-.menu > li a:hover{
-      color: blue;
-}
+
 
 .botones-header{
     display: flex;
     gap: 20px;
 }  
-.botones-header button{
+.botones-header a{
     padding: 10px 20px;
     background-color: #6d9f71;
     color: white;
@@ -101,7 +83,7 @@ nav ul li {
     transition: 0.5s;
 }
 
-.botones-header button:hover{
+.botones-header a:hover{
     background-color: #5b815e;
     border: 1px solid #5b815e;
     color: #e4e4e4;
@@ -128,7 +110,9 @@ nav ul li {
 
 
 
-footer{
+
+
+#footer{
     background-color: #6d9f71;
     color: white;
     justify-content: center;

@@ -1,5 +1,5 @@
 <!-- parte final del documento-->
-<footer = "footer">
+<footer id= "footer">
     <div class="div_footer_header">
         <div class="div_logo_footer">
             <img width="70" height="70" src="https://pbs.twimg.com/media/GbtRafJW4BEozsZ?format=png&name=small" alt="logo">

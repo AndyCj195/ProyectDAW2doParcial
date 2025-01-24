@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/forms.css">
+    <link rel="stylesheet" href="assets/css/styleForm.css">
     <title>Registro de Usuario</title>
 </head>
 <body>
-    <main>
-    <div id="div-main">
-        <div>
-            <img class="div_logo_header" src="https://pbs.twimg.com/media/GbtRafJW4BEozsZ?format=png&name=small" alt="logo">
+    <div id="main-div">
+        <div class="logo-header">
+            <a href="index.php">
+                <img class="img-logo" src="https://pbs.twimg.com/media/GbtRafJW4BEozsZ?format=png&name=small" alt="logo">
+            </a>
         </div>
-        </div>
-        <div id="formulario">
-            <div class="titulo" style="color: #2e7d32;">
-                <h1>Registro de Usuario</h1>
+        <div id="formulario" class="form-register">
+            <div class="titulo">
+                <h1 style="color: #2e7d32;">Registro de Usuario</h1>
             </div>
                 <form action="index.php?c=Usuario&f=register" method="POST" name="form-register" id="form-register">
                     <div class="form-row">
@@ -45,14 +45,14 @@
                                 <div class="error-message" id="error-telefono"></div>
                             </div>
                         </div>
-                        <div class="seccion">
+                        <div class="seccion" style="display: block;">
                             <div class="div-direccion">
                                 <label for="direccion">Direccion</label><br>
                                 <input type="text" name="direccion" id="input-direccion">
                                 <div class="error-message" id="error-direccion"></div>
                             </div>
                         </div>
-                        <div class="seccion">
+                        <div class="seccion" style="display: block;">
                             <div class="div-tipoDeUsuario">
                                 <label for="tipoDeUsuario">Tipo de Usuario</label><br>
                                 <select name="tipoDeUsuario" id="input-tipoDeUsuario">
@@ -75,15 +75,16 @@
                                 <div class="error-message" id="error-contrasena2"></div>
                             </div>
                         </div>
-                        <div>
-                            <button type="submit" id="btn-registrar">Registrar</button>
-                            <button type="button" onclick="window.location.href='index.php?c=index&f=index&p=login'">Cancelar</button>
+                        <div class="seccion" style="display: block;">
+                            <div class="div-botones">
+                                <button type="submit" id="btn-registrar">Registrar</button>
+                                <button type="button" onclick="window.location.href='index.php?c=index&f=index&p=login'">Cancelar</button>
+                            </div>
                         </div>
                     </div>
                 </form>
 
         </div>            
     </div>  
-    </main>
 </body>
 </html>
