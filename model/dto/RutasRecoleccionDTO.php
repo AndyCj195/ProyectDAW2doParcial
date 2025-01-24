@@ -13,7 +13,6 @@ class RutasRecoleccionDTO {
         
     }
 
-    // Getters
     public function getId() {
         return $this->id;
     }
@@ -42,7 +41,6 @@ class RutasRecoleccionDTO {
         return $this->VehiculoAsignado;
     }
 
-    // Setters
     public function setId($id) {
         $this->id = $id;
     }

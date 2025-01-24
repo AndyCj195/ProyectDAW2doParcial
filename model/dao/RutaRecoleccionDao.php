@@ -1,6 +1,6 @@
 <?php
-require_once 'Conexion.php'; // Clase para la conexión a la base de datos
-require_once 'RutasRecoleccionDTO.php'; // Clase DTO
+require_once 'Conexion.php'; 
+require_once 'RutasRecoleccionDTO.php'; 
 
 class RutasRecoleccionDAO {
     private $conexion;
@@ -9,7 +9,6 @@ class RutasRecoleccionDAO {
         $this->conexion = Conexion::getConexion();
     }
 
-    // Crear una nueva ruta de recolección
     public function create(RutasRecoleccionDTO $ruta) {
         try {
             $query = "INSERT INTO RutasRecoleccion (FechaDeRecoleccion, HoraDeRecoleccion, materialesARecoger, EmpresaEncargada, SectorCubierto, VehiculoAsignado)
@@ -27,8 +26,6 @@ class RutasRecoleccionDAO {
             return false;
         }
     }
-
-    // Leer todas las rutas de recolección
     public function readAll() {
         try {
             $query = "SELECT * FROM RutasRecoleccion";
@@ -55,7 +52,6 @@ class RutasRecoleccionDAO {
         }
     }
 
-    // Leer una ruta por su ID
     public function readById($id) {
         try {
             $query = "SELECT * FROM RutasRecoleccion WHERE id = :id";
@@ -82,7 +78,6 @@ class RutasRecoleccionDAO {
         }
     }
 
-    // Actualizar una ruta existente
     public function update(RutasRecoleccionDTO $ruta) {
         try {
             $query = "UPDATE RutasRecoleccion 
@@ -108,7 +103,6 @@ class RutasRecoleccionDAO {
         }
     }
 
-    // Eliminar una ruta por su ID 54696598
     public function delete($id) {
         try {
             $query = "DELETE FROM RutasRecoleccion WHERE id = :id";
