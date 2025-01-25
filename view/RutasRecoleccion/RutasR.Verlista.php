@@ -1,5 +1,5 @@
-
 <?php require_once HEADER ?>
+<!--Autor: CESAR XAVIER VILLACIS ALVIA-->
 <main style="padding: 20px; background-color: #f0f8f0; font-family: Arial, sans-serif;">
     <h1 style="color: #2a4d2a; text-align: center; margin-bottom: 20px;">Listado de Rutas de Recolección</h1>
     <?php if ($tipoDeUsuario === 'Administrador'): ?>
