@@ -19,12 +19,12 @@ class RutasController {
         } //require_once VRUTAS."Verlista.php";
     }
 
-
     public function createForm() {
-        require_once 'view/RutasRecoleccion/create.php'; // Vista del formulario para crear rutas
+        $titulo = "Crear rutas";
+        require_once 'view/RutasRecoleccion/RutasR.CrearLista.php'; // Vista del formulario para crear rutas
     }
 
- 
+
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fecha = $_POST['FechaDeRecoleccion'];
@@ -46,28 +46,46 @@ class RutasController {
     }
 
 
-    public function editForm($id) {
-        $ruta = $this->rutaDAO->readById($id);
-        if ($ruta) {
-            require_once 'view/RutasRecoleccion/edit.php'; // Vista del formulario para editar rutas
-        } else {
-            echo "Ruta no encontrada.";
+    public function editForm() {
+        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+    
+        if (!$id) {
+            die("ID no válido.");
         }
+    
+        $ruta = $this->rutaDAO->readById($id);
+    
+        if (!$ruta) {
+            die("Ruta no encontrada.");
+        }
+    
+        // Ajusta la ruta al archivo correcto
+        require_once __DIR__ . "/../view/RutasRecoleccion/RutasR.EditarLista.php";
     }
+    
+    
 
 
-    public function update() {
+    public function edit() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
+            $id = filter_var($_POST['id_RutasRecoleccion'], FILTER_VALIDATE_INT);
             $fecha = $_POST['FechaDeRecoleccion'];
             $hora = $_POST['HoraDeRecoleccion'];
             $materiales = $_POST['materialesARecoger'];
             $empresa = $_POST['EmpresaEncargada'];
             $sector = $_POST['SectorCubierto'];
             $vehiculo = $_POST['VehiculoAsignado'];
-
+    
+            // Validación básica
+            if (!$id || !$fecha || !$hora || !$materiales || !$empresa || !$sector) {
+                echo "Todos los campos obligatorios deben ser llenados.";
+                return;
+            }
+    
+            // Crear DTO con los datos
             $rutaDTO = new RutasRecoleccionDTO($id, $fecha, $hora, $materiales, $empresa, $sector, $vehiculo);
-
+    
+            // Actualizar en la base de datos
             if ($this->rutaDAO->update($rutaDTO)) {
                 header("Location: index.php?c=Rutas&f=index");
                 exit;
@@ -76,6 +94,7 @@ class RutasController {
             }
         }
     }
+    
 
  
     public function delete($id) {

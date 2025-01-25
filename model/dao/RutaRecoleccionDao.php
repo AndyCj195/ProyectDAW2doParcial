@@ -15,18 +15,36 @@ class RutasRecoleccionDAO {
             $query = "INSERT INTO RutasRecoleccion (FechaDeRecoleccion, HoraDeRecoleccion, materialesARecoger, EmpresaEncargada, SectorCubierto, VehiculoAsignado)
                       VALUES (:FechaDeRecoleccion, :HoraDeRecoleccion, :materialesARecoger, :EmpresaEncargada, :SectorCubierto, :VehiculoAsignado)";
             $stmt = $this->conexion->prepare($query);
-            $stmt->bindParam(':FechaDeRecoleccion', $ruta->getFechaDeRecoleccion(), PDO::PARAM_STR);
-            $stmt->bindParam(':HoraDeRecoleccion', $ruta->getHoraDeRecoleccion(), PDO::PARAM_STR);
-            $stmt->bindParam(':materialesARecoger', $ruta->getMaterialesARecoger(), PDO::PARAM_STR);
-            $stmt->bindParam(':EmpresaEncargada', $ruta->getEmpresaEncargada(), PDO::PARAM_STR);
-            $stmt->bindParam(':SectorCubierto', $ruta->getSectorCubierto(), PDO::PARAM_STR);
-            $stmt->bindParam(':VehiculoAsignado', $ruta->getVehiculoAsignado(), PDO::PARAM_STR);
+    
+            // Variables asignadas
+            $fechaDeRecoleccion = $ruta->getFechaDeRecoleccion();
+            $horaDeRecoleccion = $ruta->getHoraDeRecoleccion();
+            $materialesARecoger = $ruta->getMaterialesARecoger();
+            $empresaEncargada = $ruta->getEmpresaEncargada();
+            $sectorCubierto = $ruta->getSectorCubierto();
+            $vehiculoAsignado = $ruta->getVehiculoAsignado();
+    
+            var_dump($fechaDeRecoleccion, $horaDeRecoleccion, $materialesARecoger, $empresaEncargada, $sectorCubierto, $vehiculoAsignado);
+            exit; // Verifica los valores antes de ejecutar la consulta
+    
+            $stmt->bindParam(':FechaDeRecoleccion', $fechaDeRecoleccion, PDO::PARAM_STR);
+            $stmt->bindParam(':HoraDeRecoleccion', $horaDeRecoleccion, PDO::PARAM_STR);
+            $stmt->bindParam(':materialesARecoger', $materialesARecoger, PDO::PARAM_STR);
+            $stmt->bindParam(':EmpresaEncargada', $empresaEncargada, PDO::PARAM_STR);
+            $stmt->bindParam(':SectorCubierto', $sectorCubierto, PDO::PARAM_STR);
+            $stmt->bindParam(':VehiculoAsignado', $vehiculoAsignado, PDO::PARAM_STR);
+    
             return $stmt->execute();
         } catch (PDOException $ex) {
             error_log("Error al crear ruta de recolección: " . $ex->getMessage());
+            echo "Error detallado: " . $ex->getMessage();
             return false;
         }
     }
+    
+    
+    
+    
     public function readAll() {
         try {
             $query = "SELECT * FROM rutasrecoleccion";
@@ -56,29 +74,18 @@ class RutasRecoleccionDAO {
 
     public function readById($id) {
         try {
-            $query = "SELECT * FROM RutasRecoleccion WHERE id = :id";
+            $query = "SELECT * FROM RutasRecoleccion WHERE id_RutasRecoleccion = :id";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
-            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($fila) {
-                return new RutasRecoleccionDTO(
-                    $fila['id_RutasRecoleccion'],
-                    $fila['FechaDeRecoleccion'],
-                    $fila['HoraDeRecoleccion'],
-                    $fila['materialesARecoger'],
-                    $fila['EmpresaEncargada'],
-                    $fila['SectorCubierto'],
-                    $fila['VehiculoAsignado']
-                );
-            }
-            return null;
+    
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
-            error_log("Error al leer ruta de recolección por ID: " . $ex->getMessage());
+            error_log("Error al obtener la ruta: " . $ex->getMessage());
             return null;
         }
     }
+    
 
     public function update(RutasRecoleccionDTO $ruta) {
         try {
@@ -89,9 +96,9 @@ class RutasRecoleccionDAO {
                           EmpresaEncargada = :EmpresaEncargada,
                           SectorCubierto = :SectorCubierto,
                           VehiculoAsignado = :VehiculoAsignado
-                      WHERE id = :id";
+                      WHERE id_RutasRecoleccion = :id";
             $stmt = $this->conexion->prepare($query);
-            $stmt->bindParam(':id_RutasRecoleccion', $ruta->getid(), PDO::PARAM_INT);
+            $stmt->bindParam(':id', $ruta->getId(), PDO::PARAM_INT);
             $stmt->bindParam(':FechaDeRecoleccion', $ruta->getFechaDeRecoleccion(), PDO::PARAM_STR);
             $stmt->bindParam(':HoraDeRecoleccion', $ruta->getHoraDeRecoleccion(), PDO::PARAM_STR);
             $stmt->bindParam(':materialesARecoger', $ruta->getMaterialesARecoger(), PDO::PARAM_STR);
