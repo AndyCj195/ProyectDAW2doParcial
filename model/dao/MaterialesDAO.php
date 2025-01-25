@@ -10,18 +10,31 @@ class MaterialesDAO {
     }
 
     // Método para seleccionar todos los registros
-    public function selectAll($parametro) {
+    public function selectAll($estadoDelMaterial) {
         try {
-            $sql = "SELECT * FROM gestionmateriales WHERE tipoDeMateriales LIKE :parametro OR comunidadZonaAsociada LIKE :parametro";
-            $stmt = $this->con->prepare($sql);
-            $conlike = '%' . $parametro . '%';
-            $stmt->bindParam(':parametro', $conlike, PDO::PARAM_STR);
+            // Consulta para filtrar por estado del material
+            $query = "SELECT * FROM gestionmateriales WHERE estadoDelMaterial = :estadoDelMaterial";
+            $stmt = $this->con->prepare($query);
+            $stmt->bindParam(':estadoDelMaterial', $estadoDelMaterial, PDO::PARAM_STR);
             $stmt->execute();
-            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $res;
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            $materiales = [];
+            foreach ($resultados as $resultado) {
+                $material = new Materiales();
+                $material->setId($resultado['id']);
+                $material->setTipoDeMateriales($resultado['tipoDeMateriales']);
+                $material->setCantidadTotalKg($resultado['cantidadTotalKg']);
+                $material->setEstadoDelMaterial($resultado['estadoDelMaterial']);
+                $material->setComunidadZonaAsociada($resultado['comunidadZonaAsociada']);
+                $material->setEmpresaAsignada($resultado['empresaAsignada']);
+                $materiales[] = $material;
+            }
+            return $materiales;
         } catch (PDOException $e) {
-            error_log("Error en selectAll de GestionMaterialesDAO: " . $e->getMessage());
-            echo "Error en selectAll de GestionMaterialesDAO: " . $e->getMessage();
+            // Registro de error
+            error_log("Error en selectAll de MaterialesDAO: " . $e->getMessage());
+            echo "Error al listar materiales: " . $e->getMessage();
             return [];
         }
     }

@@ -40,7 +40,7 @@
                 <!-- Botones de acción -->
                 <div class="form-group mx-auto">
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="index.php?c=Materiales&f=index" class="btn btn-secondary">Cancelar</a>
+                    <a href="index.php?c=Usuario&f=index" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>
