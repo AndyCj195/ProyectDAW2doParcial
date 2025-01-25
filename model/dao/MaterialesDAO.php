@@ -54,6 +54,50 @@ class MaterialesDAO {
         }
     }
 
+
+    public function selectByFilters($filtros) {
+        try {
+            $query = "SELECT * FROM gestionmateriales WHERE 1=1";
+            $params = [];
+    
+            // Filtro por texto
+            if (!empty($filtros['texto'])) {
+                $query .= " AND tipoDeMateriales LIKE :texto";
+                $params[':texto'] = "%" . $filtros['texto'] . "%";
+            }
+    
+            // Filtro por estado
+            if (!empty($filtros['estado'])) {
+                $query .= " AND estadoDelMaterial = :estado";
+                $params[':estado'] = $filtros['estado'];
+            }
+    
+            $stmt = $this->con->prepare($query);
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
+            $stmt->execute();
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            $materiales = [];
+            foreach ($resultados as $resultado) {
+                $material = new Materiales();
+                $material->setId($resultado['id']);
+                $material->setTipoDeMateriales($resultado['tipoDeMateriales']);
+                $material->setCantidadTotalKg($resultado['cantidadTotalKg']);
+                $material->setEstadoDelMaterial($resultado['estadoDelMaterial']);
+                $material->setComunidadZonaAsociada($resultado['comunidadZonaAsociada']);
+                $material->setEmpresaAsignada($resultado['empresaAsignada']);
+                $materiales[] = $material;
+            }
+            return $materiales;
+        } catch (PDOException $e) {
+            error_log("Error en selectByFilters de MaterialesDAO: " . $e->getMessage());
+            return [];
+        }
+    }
+
+
     // Método para insertar un nuevo registro
     public function insert($material) {
         try {

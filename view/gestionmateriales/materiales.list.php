@@ -2,21 +2,6 @@
     <h2><?php echo 'Gestión de Materiales'; ?></h2>
     <div class="row">
         <!-- Formulario de búsquedasss -->
-        <div class="col-sm-6">
-            <form action="index.php?c=MaterialesController&f=search" method="GET">
-                <input 
-                    type="text" 
-                    name="search" 
-                    id="busqueda" 
-                    placeholder="Buscar..." 
-                    value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" 
-                />
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search"></i> Buscar
-                </button>
-            </form>
-        </div>
-
         <!-- Botón para añadir nuevo -->
         <div class="col-sm-6 d-flex flex-column align-items-end">
             <a href="index.php?c=Materiales&f=view_new">
@@ -26,6 +11,17 @@
             </a>
         </div>
     </div>
+
+    <form method="POST" action="index.php?c=Materiales&f=search">
+    <input type="text" name="b" placeholder="Buscar por tipo de material" value="<?= htmlentities($_POST['b'] ?? '') ?>" />
+    <select name="estadoDelMaterial">
+        <option value="">-- Seleccionar estado --</option>
+        <option value="Procesado" <?= ($_POST['estadoDelMaterial'] ?? '') === 'Procesado' ? 'selected' : '' ?>>Procesado</option>
+        <option value="Disponible" <?= ($_POST['estadoDelMaterial'] ?? '') === 'Disponible' ? 'selected' : '' ?>>Disponible</option>
+        <option value="No disponible" <?= ($_POST['estadoDelMaterial'] ?? '') === 'No disponible' ? 'selected' : '' ?>>No Disponible</option>
+    </select>
+    <button type="submit">Buscar</button>
+    </form>
 
     <!-- Tabla de resultados -->
     <div class="table-responsive mt-2">
@@ -51,12 +47,12 @@
                             <td><?php echo htmlspecialchars($fila->getEmpresaAsignada()); ?></td>
                             <td>
                                 <a class="btn btn-primary" 
-                                   href="index.php?c=MaterialesController&f=view_edit&id=<?php echo $fila->getId(); ?>">
+                                   href="index.php?c=Materiales&f=view_edit&id=<?php echo $fila->getId(); ?>">
                                     Editar
                                 </a>
                                 <a class="btn btn-danger" 
                                    onclick="return confirm('¿Está seguro de eliminar este material?');" 
-                                   href="index.php?c=MaterialesController&f=delete&id=<?php echo $fila->getId(); ?>">
+                                   href="index.php?c=Materiales&f=delete&id=<?php echo $fila->getId(); ?>">
                                     Eliminar
                                 </a>
                             </td>

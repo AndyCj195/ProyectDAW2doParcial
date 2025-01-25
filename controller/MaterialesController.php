@@ -19,18 +19,27 @@ class MaterialesController
 
     // Busca materiales
     public function search(){
-        $parametro = htmlentities($_POST['b'] ?? "");
-        $resultados = $this->model->selectAll($parametro);
+        $texto = htmlentities($_POST['b'] ?? "");
+        $estado = htmlentities($_POST['estadoDelMaterial'] ?? "");
+        
+        // Combinar los filtros
+        $filtros = [
+            'texto' => $texto,
+            'estado' => $estado
+        ];
+    
+        $resultados = $this->model->selectByFilters($filtros);
         $titulo = "Buscar materiales";
         require_once VMATERIALES . 'list.php';
     }
 
-    // Elimina un material
-    public function delete(){
+    // Elimina un material 
+    public function delete() {
         $id = htmlentities($_REQUEST['id'] ?? "");
-        $exito = $this->model->logicalDelete($id);
+        $exito = $this->model->delete($id);
         $this->redirectWithMessage($exito, "Material eliminado exitosamente", "No se pudo realizar la eliminación", "index.php?c=Materiales&f=index");
     }
+
 
     // Muestra la vista para crear un nuevo material
     public function view_new(){
@@ -63,7 +72,7 @@ class MaterialesController
         if ($material == null) {
             $_SESSION["mensaje"] = "No se pudo encontrar el material a editar";
             $_SESSION["color"] = "danger";
-            header("Location: index.php?c=gestionmateriales&f=index");
+            header("Location: index.php?c=Materiales&f=index");
         }
         $titulo = "Editar material";
         require_once VMATERIALES . 'edit.php';
@@ -74,17 +83,17 @@ class MaterialesController
         if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $_SESSION["mensaje"] = "Método no permitido";
             $_SESSION["color"] = "danger";
-            header("Location: index.php?c=gestionmateriales&f=index");
+            header("Location: index.php?c=Materiales&f=index");
         }
         if (empty($_POST["descripcion"]) || empty($_POST["cantidad"])) {
             $_SESSION["mensaje"] = "Datos incompletos";
             $_SESSION["color"] = "danger";
-            header("Location: index.php?c=gestionmateriales&f=index");
+            header("Location: index.php?c=Materiales&f=index");
         }
 
         $material = $this->populate();
         $exito = $this->model->update($material);
-        $this->redirectWithMessage($exito, "Material actualizado exitosamente", "No se pudo realizar la actualización", "index.php?c=gestionmateriales&f=index");
+        $this->redirectWithMessage($exito, "Material actualizado exitosamente", "No se pudo realizar la actualización", "index.php?c=Materiales&f=index");
     }
 
     // Redirige con mensaje
@@ -105,7 +114,6 @@ class MaterialesController
         $material->setComunidadZonaAsociada(htmlentities($_POST['comunidadZonaAsociada']));
         $material->setEmpresaAsignada(htmlentities($_POST['empresaAsignada']));
         return $material;
-    }
-    
+    }  
 }
 ?>
