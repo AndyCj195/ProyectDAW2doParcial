@@ -128,49 +128,51 @@ require_once 'Config/config.php';
             </button>
         </form>
 
-        <!-- Formulario para buscar registros -->
-        <form action="index.php?c=Historial&f=index" method="get" style="margin-top: 20px;">
-            <input type="hidden" name="c" value="Historial">
-            <input type="hidden" name="f" value="index">
-            <input type="text" name="search" placeholder="Buscar registros..." value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
-            <button type="submit">Buscar</button>
-        </form>
+        <?php if (($_SESSION['tipoDeUsuario'] ?? null) === 'Empresa'): ?>
+            <!-- Formulario para buscar registros -->
+            <form action="index.php?c=Historial&f=index" method="get" style="margin-top: 20px;">
+                <input type="hidden" name="c" value="Historial">
+                <input type="hidden" name="f" value="index">
+                <input type="text" name="search" placeholder="Buscar registros..." value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+                <button type="submit">Buscar</button>
+            </form>
 
-        <!-- Tabla de registros -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Fecha de Registro</th>
-                    <th>Tipo de Material</th>
-                    <th>Cantidad Reciclada</th>
-                    <th>Estado del Registro</th>
-                    <th>Empresa Recolectora</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (isset($registros) && !empty($registros)): ?>
-                    <?php foreach ($registros as $registro): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($registro['FechaDeRegistro']); ?></td>
-                            <td><?php echo htmlspecialchars($registro['TipoDelMaterialReciclado']); ?></td>
-                            <td><?php echo htmlspecialchars($registro['CantidadReciclada']); ?></td>
-                            <td><?php echo htmlspecialchars($registro['EstadoDelRegistro']); ?></td>
-                            <td><?php echo htmlspecialchars($registro['EmpresaRecolectora']); ?></td>
-                            <td>
-                                <a href="index.php?c=Historial&f=index&action=edit&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>">Editar</a> | 
-                                <a href="index.php?c=Historial&f=index&action=delete&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>" 
-                                onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?');">Eliminar</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
+            <!-- Tabla de registros -->
+            <table>
+                <thead>
                     <tr>
-                        <td colspan="6" style="text-align: center;">No hay registros disponibles.</td>
+                        <th>Fecha de Registro</th>
+                        <th>Tipo de Material</th>
+                        <th>Cantidad Reciclada</th>
+                        <th>Estado del Registro</th>
+                        <th>Empresa Recolectora</th>
+                        <th>Acciones</th>
                     </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php if (isset($registros) && !empty($registros)): ?>
+                        <?php foreach ($registros as $registro): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($registro['FechaDeRegistro']); ?></td>
+                                <td><?php echo htmlspecialchars($registro['TipoDelMaterialReciclado']); ?></td>
+                                <td><?php echo htmlspecialchars($registro['CantidadReciclada']); ?></td>
+                                <td><?php echo htmlspecialchars($registro['EstadoDelRegistro']); ?></td>
+                                <td><?php echo htmlspecialchars($registro['EmpresaRecolectora']); ?></td>
+                                <td>
+                                    <a href="index.php?c=Historial&f=index&action=edit&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>">Editar</a> | 
+                                    <a href="index.php?c=Historial&f=index&action=delete&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>" 
+                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?');">Eliminar</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6" style="text-align: center;">No hay registros disponibles.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
     </main>
     <?php require_once FOOTER; ?>
 </body>
