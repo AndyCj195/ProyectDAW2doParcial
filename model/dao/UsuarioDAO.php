@@ -5,7 +5,7 @@ class UsuarioDAO{
     private $conexion;
 
     public function __construct() {
-        $this->conexion = Conexion::getConexion();
+        $this->conexion = Conexion::getConnection();
     }
 
     public function login($correo, $contrasena){

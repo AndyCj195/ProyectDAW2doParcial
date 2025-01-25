@@ -1,5 +1,6 @@
+<!--Author: Jorge Suárez Valarezo-->    
 <?php
-require_once 'Config/config.php'; // Asegúrate de que esta ruta sea correcta
+require_once 'Config/config.php';
 ?>
 <html lang="es">
 <head>

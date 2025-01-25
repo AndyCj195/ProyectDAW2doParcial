@@ -1,3 +1,4 @@
+<!--Author: Jorge Suárez Valarezo-->    
 <?php
 require_once 'model/dao/HistorialDAO.php';
 

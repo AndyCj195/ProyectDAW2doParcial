@@ -1,3 +1,4 @@
+<!--Author: Jorge Suárez Valarezo-->    
 <?php
 require_once 'config/Conexion.php';
 require_once 'model/dto/HistorialRegistro.php';
