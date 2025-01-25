@@ -1,16 +1,18 @@
 <?php require_once HEADER; ?>
+<style>
 
+</style>
 <main>
     <h1>Usuarios</h1><hr>
-    <div id="main-header">
+    <div id="main-header" style="display: flex; justify-content: space-between;">
         <div class="search">
             <form action="">
                 <input type="text" name="b" id="search" placeholder="Buscar...">
-                <button type="submit" value="Buscar">
+                <button type="submit" value="Buscar">Buscar</button> 
             </form>
         </div>
         <div class="dump">
-            <a href="index.php?c=Usuario&f=view_register">
+            <a href="index.php?c=Usuario&f=view_dump">
                 <button>
                     Basurero
                 </button>
@@ -46,17 +48,10 @@
 
                     <td>
                         <a href="index.php?c=Usuario&f=view_edit&id=<?= $usuario->getId() ?>">Editar</a>
-                        <a href="#" onclick="eliminarUsuario(<?= $usuario->getId() ?>)">Eliminar</a>
-                        <script>
-                            function eliminarUsuario(id) {
-                                var opcion = confirm("¿Desea realizar una eliminación lógica? Presione 'Aceptar' para eliminación lógica o 'Cancelar' para eliminación física.");
-                                if (opcion) {
-                                    window.location.href = "index.php?c=Usuario&f=eliminar_logico&id=" + id;
-                                } else {
-                                    window.location.href = "index.php?c=Usuario&f=eliminar_fisico&id=" + id;
-                                }
-                            }
-                        </script>
+                        <a href="index.php?c=Usuario&f=logicalDeleteUser&id=<?= $usuario->getId() ?>" 
+                        onclick="if(!confirm('Está seguro de eliminar el producto?'))return false;"
+                         >Eliminar</a>
+                        
                     </td>
                 </tr>
             <?php } ?>
