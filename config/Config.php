@@ -12,7 +12,7 @@ define("FOOTER","view/templates/footer.php");
 //rutas de vistas modulo usuario
 define("VUSUARIO","view/usuarios/usuarios.");
 
-define("VRUTAS","view/rutas/rutas.");
+define("VRUTAS","view/rutas/RutasR.");
 
 
 //conexion a la base de datos

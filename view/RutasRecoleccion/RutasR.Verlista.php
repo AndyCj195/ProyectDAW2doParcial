@@ -1,22 +1,9 @@
-<?php
-// Autor: CESAR XAVIER VILLACIS ALVIA
-require_once 'controller/RutasController.php';
-
-$rutasController = new RutasController();
-$rutas = $RutasController->index(); // Obtener las rutas desde el controlador
-?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <title>Listado de Rutas de Recolección</title>
-</head>
-<body>
+<?php require_once HEADER ?>
+    <main>
     <h1>Listado de Rutas de Recolección</h1>
+    <?php if ($tipoDeUsuario === 'Administrador'): ?>
     <a href="index.php?c=Rutas&f=createForm" class="btn">Nueva Ruta</a>
+        <?php endif; ?>    
     <table border="1">
         <thead>
             <tr>
@@ -41,10 +28,12 @@ $rutas = $RutasController->index(); // Obtener las rutas desde el controlador
                         <td><?php echo $ruta->getEmpresaEncargada(); ?></td>
                         <td><?php echo $ruta->getSectorCubierto(); ?></td>
                         <td><?php echo $ruta->getVehiculoAsignado(); ?></td>
-                        <td>
+                        <?php if ($tipoDeUsuario === 'Administrador'): ?>
+                        <td> 
                             <a href="index.php?c=Rutas&f=editForm&id=<?php echo $ruta->getId(); ?>">Editar</a>
                             <a href="index.php?c=Rutas&f=delete&id=<?php echo $ruta->getId(); ?>" onclick="return confirm('¿Estás seguro de eliminar esta ruta?')">Eliminar</a>
                         </td>
+                        <?php endif; ?>  
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -54,5 +43,5 @@ $rutas = $RutasController->index(); // Obtener las rutas desde el controlador
             <?php endif; ?>
         </tbody>
     </table>
-</body>
-</html>
+</main>
+<?php require_once FOOTER ?>

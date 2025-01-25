@@ -1,7 +1,7 @@
 <?php
 //autor:CESAR XAVIER VILLACIS ALVIA
-require_once 'Conexion.php'; 
-require_once 'RutasRecoleccionDTO.php'; 
+require_once 'Config/Conexion.php'; 
+
 
 class RutasRecoleccionDAO {
     private $conexion;
@@ -29,22 +29,23 @@ class RutasRecoleccionDAO {
     }
     public function readAll() {
         try {
-            $query = "SELECT * FROM RutasRecoleccion";
+            $query = "SELECT * FROM rutasrecoleccion";
             $stmt = $this->conexion->prepare($query);
             $stmt->execute();
             $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $rutas = [];
             foreach ($resultados as $fila) {
-                $rutas[] = new RutasRecoleccionDTO(
-                    $fila['id'],
-                    $fila['FechaDeRecoleccion'],
-                    $fila['HoraDeRecoleccion'],
-                    $fila['materialesARecoger'],
-                    $fila['EmpresaEncargada'],
-                    $fila['SectorCubierto'],
-                    $fila['VehiculoAsignado']
-                );
+                $ruta = new RutasRecoleccionDTO();
+                $ruta->setId($fila['id_RutasRecoleccion']);
+                $ruta->setFechaDeRecoleccion($fila['FechaDeRecoleccion']);
+                $ruta->setHoraDeRecoleccion($fila['HoraDeRecoleccion']);
+                $ruta->setmaterialesARecoger($fila['materialesARecoger']);
+                $ruta->setEmpresaEncargada($fila['EmpresaEncargada']);
+                $ruta->setSectorCubierto($fila['SectorCubierto']);
+                $ruta->setVehiculoAsignado($fila['VehiculoAsignado']);
+                $rutas[] = $ruta;
+    
             }
             return $rutas;
         } catch (PDOException $ex) {
@@ -63,7 +64,7 @@ class RutasRecoleccionDAO {
 
             if ($fila) {
                 return new RutasRecoleccionDTO(
-                    $fila['id'],
+                    $fila['id_RutasRecoleccion'],
                     $fila['FechaDeRecoleccion'],
                     $fila['HoraDeRecoleccion'],
                     $fila['materialesARecoger'],
@@ -90,7 +91,7 @@ class RutasRecoleccionDAO {
                           VehiculoAsignado = :VehiculoAsignado
                       WHERE id = :id";
             $stmt = $this->conexion->prepare($query);
-            $stmt->bindParam(':id', $ruta->getId(), PDO::PARAM_INT);
+            $stmt->bindParam(':id_RutasRecoleccion', $ruta->getid(), PDO::PARAM_INT);
             $stmt->bindParam(':FechaDeRecoleccion', $ruta->getFechaDeRecoleccion(), PDO::PARAM_STR);
             $stmt->bindParam(':HoraDeRecoleccion', $ruta->getHoraDeRecoleccion(), PDO::PARAM_STR);
             $stmt->bindParam(':materialesARecoger', $ruta->getMaterialesARecoger(), PDO::PARAM_STR);
@@ -106,7 +107,7 @@ class RutasRecoleccionDAO {
 
     public function delete($id) {
         try {
-            $query = "DELETE FROM RutasRecoleccion WHERE id = :id";
+            $query = "DELETE FROM RutasRecoleccion WHERE id_RutasRecoleccion = :id";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();

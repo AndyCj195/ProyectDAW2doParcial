@@ -1,7 +1,7 @@
 <?php
 //autor: CESAR XAVIER VILLACIS ALVIA
 class RutasRecoleccionDTO {
-    private $id;
+    private $id_RutasRecoleccion;
     private $FechaDeRecoleccion;
     private $HoraDeRecoleccion;
     private $materialesARecoger;
@@ -15,7 +15,7 @@ class RutasRecoleccionDTO {
     }
 
     public function getId() {
-        return $this->id;
+        return $this->id_RutasRecoleccion;
     }
 
     public function getFechaDeRecoleccion() {
@@ -42,8 +42,8 @@ class RutasRecoleccionDTO {
         return $this->VehiculoAsignado;
     }
 
-    public function setId($id) {
-        $this->id = $id;
+    public function setId($id_RutasRecoleccion) {
+        $this->id_RutasRecoleccion = $id_RutasRecoleccion;
     }
 
     public function setFechaDeRecoleccion($FechaDeRecoleccion) {

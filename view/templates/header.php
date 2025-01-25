@@ -47,6 +47,7 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                                         <!-- Opciones para Administrador -->
                                         <li><a href="index.php?c=Admin&f=manageUsers">Gestionar Rutas</a></li>
                                         <li><a href="index.php?c=Usuario&f=listUser">Gestionar Usuarios</a></li>
+                                        
                                     <?php elseif ($tipoDeUsuario === 'Empresa'): ?>
                                         <!-- Opciones para Empresa -->
                                         <li><a href="index.php?c=Empresa&f=manage">Gestionar Empresa</a></li>
@@ -54,7 +55,8 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                                     <?php else: ?>
                                         <!-- Opciones para Usuario Normal -->
                                         <li><a href="index.php?c=Usuario&f=perfil">Mi Perfil</a></li>
-                                        <li><a href="index.php?c=Usuario&f=misReciclajes">Rutas de Recoleccion</a></li>
+                                        <li><a href="index.php?c=Rutas&f=index">Ver Rutas</a></li>
+
                                     <?php endif; ?>
                                 </ul>
                             </nav>

@@ -13,10 +13,10 @@ class RutasController {
     public function index() {
         try {
             $rutas = $this->rutaDAO->readAll();
-            require_once 'view/RutasRecoleccion/index.php'; // Vista que lista todas las rutas
+            require_once 'view/RutasRecoleccion/RutasR.Verlista.php'; // Vista que lista todas las rutas
         } catch (Exception $e) {
             echo "Error al cargar las rutas: " . $e->getMessage();
-        }
+        } //require_once VRUTAS."Verlista.php";
     }
 
 
