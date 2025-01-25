@@ -1,6 +1,7 @@
 <?php
 require_once 'config/Conexion.php';
 
+//Author: Andres Chavez Jimenez
 class UsuarioDAO{
     private $conexion;
 
@@ -77,35 +78,6 @@ class UsuarioDAO{
             return null;
         }
     }
-
-    public function selectByStatus($estado){
-        try{
-            $query = "SELECT * FROM usuario WHERE Estado = :estado";
-            $stmt = $this->conexion->prepare($query);
-            $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
-            $stmt->execute();
-            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $usuarios = [];
-            foreach($resultados as $resultado){
-                $usuario = new Usuario();
-                $usuario->setId($resultado['id_Usuario']);
-                $usuario->setNombres($resultado['nombres']);
-                $usuario->setCorreo($resultado['correo']);
-                $usuario->setCedula($resultado['cedula']);
-                $usuario->setTelefono($resultado['telefono']);
-                $usuario->setDireccion($resultado['direccion']);
-                $usuario->setTipoDeUsuario($resultado['tipoDeUsuario']);
-                $usuario->setEstado($resultado['Estado']);
-                $usuarios[] = $usuario;
-            }
-            return $usuarios;
-        }catch(PDOException $ex){
-            echo 'Error al listar usuarios por estado: '.$ex->getMessage();
-            return [];
-        }
-    }
-
     public function insertUser($usuario, $contrasena){
         try{
             $query = "INSERT INTO Usuario (nombres, correo, cedula, telefono, direccion, tipoDeUsuario, estado, contrasena) 
@@ -178,15 +150,16 @@ class UsuarioDAO{
     }
 
     //Borrado Lógico de un usuario
-    public function logicalDeleteUser($id){
+    public function UpdateEstado($id, $estado){
         try{
-            $query = "UPDATE usuario SET estado = 'Inactivo' WHERE id_Usuario = :id";
+            $query = "UPDATE usuario SET estado = :estado WHERE id_Usuario = :id";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
             $res = $stmt->execute();
             return $res;
         }catch(PDOException $ex){
-            echo 'Error al eliminar usuario: '.$ex->getMessage();
+            echo 'Error al actualizar el estado del usuario: '.$ex->getMessage();
             return false;
         }
     }

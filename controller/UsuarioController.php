@@ -3,6 +3,7 @@
 require_once 'model/dto/Usuario.php';
 require_once 'model/dao/UsuarioDAO.php';
 
+//Author: Andres Chavez Jimenez
 class UsuarioController{
     private $model;
 
@@ -15,6 +16,23 @@ class UsuarioController{
         require_once VUSUARIO.'register.php';
     }
 
+    public function view_edit(){
+        $id = htmlentities($_GET['id']);
+        $usuario = $this->model->selectById($id);
+        if($usuario == null){
+            $_SESSION['error'] = "Usuario no encontrado";
+            header('Location: index.php?c=Usuario&f=listUser');
+        }
+
+        $titulo = "Editar Usuario";
+        require_once VUSUARIO.'edit.php';
+    }
+
+    public function view_dump(){
+        $usuarios = $this->model->selectAll('Inactivo');
+        $titulo = "Listado de Usuarios Inactivos";
+        require_once VUSUARIO.'basurero.php';
+    }
 
     public function login() {
         session_start();
@@ -73,32 +91,63 @@ class UsuarioController{
         }
     }
 
+    public function delete(){
+        $id = htmlentities($_REQUEST['id'] ?? "");
+        if($this->model->deleteUser($id)){
+            echo "Usuario Dado de baja.";
+            header('Location: index.php?c=Usuario&f=listUser');
+        }else{
+            echo "Error al eliminar el usuario.";
+        }
+    }
+
+    public function logicalDeleteUser(){
+        $id = htmlentities($_REQUEST['id'] ?? "");
+        $estado = "Inactivo";
+        if($this->model->UpdateEstado($id, $estado)){
+            echo "Usuario Dado de baja.";
+            header('Location: index.php?c=Usuario&f=view_dump');
+        }else{
+            echo "Error al eliminar el usuario.";
+        }
+    }
+
+    public function restoreUser(){
+        $id = htmlentities($_REQUEST['id'] ?? "");
+        $estado = "Activo";
+        if($this->model->UpdateEstado($id, $estado)){
+            echo "Usuario Restaurado.";
+            header('Location: index.php?c=Usuario&f=view_dump');
+        }else{
+            echo "Error al restaurar el usuario.";
+        }
+    }
     public function listUser(){
         $usuarios = $this->model->selectAll("Activo");
         $titulo = "Listado de Usuarios";
         require_once VUSUARIO.'list.php';
     }
 
-    public function view_edit(){
-        $id = htmlentities($_GET['id']);
-        $usuario = $this->model->selectById($id);
-        if($usuario == null){
-            $_SESSION['error'] = "Usuario no encontrado";
+
+    
+    public function edit(){
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            $_SESSION['error'] = "Acceso no permitido";
             header('Location: index.php?c=Usuario&f=listUser');
         }
-
-        $titulo = "Editar Usuario";
-        require_once VUSUARIO.'edit.php';
+        $user = $this->populate();
+        $exito = $this->model->updateUser($user);
+        if($exito){
+            $_SESSION['exito'] = "Usuario actualizado con éxito";
+            header('Location: index.php?c=Usuario&f=listUser');
+        }
     }
 
-    public function view_dump(){
-        $usuarios = $this->model->selectByStatus('Inactivo');
-        $titulo = "Listado de Usuarios Inactivos";
-        require_once VUSUARIO.'dump.php';
-    }
+    
 
     public function populate(){
         $user = new Usuario();
+        $user->setId($_POST['id']);
         $user->setNombres($_POST['nombres']);
         $user->setCorreo($_POST['correo']);
         $user->setCedula($_POST['cedula']);
