@@ -29,6 +29,8 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                             <nav>
                                 <ul class="menu">
                                     <li><a href="index.php">Home</a></li>
+                                    <!-- Botón para redirigir a WebHistorial -->
+                                    <li><a href="index.php?c=Historial&f=index">Historial</a></li>
                                     <li><a href="index.php?c=index&f=about">Acerca de</a></li>
                                     <li><a href="index.php?c=index&f=contact">Contacto</a></li>
                                 </ul>
@@ -43,6 +45,8 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                             <nav>
                                 <ul class="menu">
                                     <li><a href="index.php">Inicio</a></li>
+                                    <!-- Botón para redirigir a WebHistorial -->
+                                    <li><a href="index.php?c=Historial&f=index">Historial</a></li>
                                     <?php if ($tipoDeUsuario === 'Administrador'): ?>
                                         <!-- Opciones para Administrador -->
                                         <li><a href="index.php?c=Admin&f=manageUsers">Gestionar Rutas</a></li>
@@ -62,4 +66,3 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                     <?php endif; ?>
                 </div>
         </header>
-    
