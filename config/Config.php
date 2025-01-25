@@ -12,6 +12,8 @@ define("FOOTER","view/templates/footer.php");
 //rutas de vistas modulo usuario
 define("VUSUARIO","view/usuarios/usuarios.");
 
+define("VRUTAS","view/rutas/rutas.");
+
 
 //rutas de vistas modulo materiales
 define("VMATERIALES","view/gestionmateriales/materiales.");

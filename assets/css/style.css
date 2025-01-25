@@ -23,16 +23,15 @@ header{
     color: white;
 }
 
-
 .header-logo img{
       width: 100px;
       height: 100px;
 }
+
 #botones-registro{
     display: flex;
     gap: 20px;
-    justify-content: end;
-    margin-bottom: 20px;
+    justify-content: flex-end;
 }
 #botones-registro button{
     padding: 10px 20px;
@@ -42,6 +41,7 @@ header{
     border-radius: 5px;
     cursor: pointer;
     transition: 0.5s;
+    text-decoration: none;
 }
 #botones-registro button:nth-child(1){
     margin-right: 20px;
@@ -53,7 +53,6 @@ header{
     background-color: white;
     border: 1px solid white;
     border-radius: 10px;
-    
 }
 
 #botones-registro button:hover:nth-child(1){
@@ -67,14 +66,15 @@ header{
     color: #6d9f71;
 }
 
-nav ul {
+
+nav .menu {
     list-style: none;
     display: flex;
     gap: 50px;
     margin: 0;
     padding: 0;
 }
-nav ul li {
+nav .menu li {
     display: inline;
 }
 .menu > li a{
@@ -87,11 +87,12 @@ nav ul li {
       color: blue;
 }
 
-.botones-header{
-    display: flex;
+
+.header-botones{
+    display: grid;
     gap: 20px;
 }  
-.botones-header button{
+.header-botones button{
     padding: 10px 20px;
     background-color: #6d9f71;
     color: white;
@@ -101,7 +102,7 @@ nav ul li {
     transition: 0.5s;
 }
 
-.botones-header button:hover{
+.header-botones button:hover{
     background-color: #5b815e;
     border: 1px solid #5b815e;
     color: #e4e4e4;
@@ -128,7 +129,9 @@ nav ul li {
 
 
 
-footer{
+
+
+#footer{
     background-color: #6d9f71;
     color: white;
     justify-content: center;

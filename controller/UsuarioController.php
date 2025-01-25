@@ -73,6 +73,30 @@ class UsuarioController{
         }
     }
 
+    public function listUser(){
+        $usuarios = $this->model->selectAll("Activo");
+        $titulo = "Listado de Usuarios";
+        require_once VUSUARIO.'list.php';
+    }
+
+    public function view_edit(){
+        $id = htmlentities($_GET['id']);
+        $usuario = $this->model->selectById($id);
+        if($usuario == null){
+            $_SESSION['error'] = "Usuario no encontrado";
+            header('Location: index.php?c=Usuario&f=listUser');
+        }
+
+        $titulo = "Editar Usuario";
+        require_once VUSUARIO.'edit.php';
+    }
+
+    public function view_dump(){
+        $usuarios = $this->model->selectByStatus('Inactivo');
+        $titulo = "Listado de Usuarios Inactivos";
+        require_once VUSUARIO.'dump.php';
+    }
+
     public function populate(){
         $user = new Usuario();
         $user->setNombres($_POST['nombres']);

@@ -35,28 +35,31 @@ class UsuarioDAO{
     }
 
 
-    public function selectAll(){
+    public function selectAll($estado){
         try{
-            $query = "SELECT * FROM usuario";
+            $query = "SELECT * FROM usuario WHERE Estado = :estado";
             $stmt = $this->conexion->prepare($query);
+            $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
             $stmt->execute();
             $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $usuarios = [];
             foreach($resultados as $resultado){
-                $usuarios = new Usuario();
-                $usuarios->setId($resultado['id']);
-                $usuarios->setNombres($resultado['nombre']);
-                $usuarios->setCorreo($resultado['correo']);
-                $usuarios->setCedula($resultado['cedula']);
-                $usuarios->setTelefono($resultado['telefono']);
-                $usuarios->setDireccion($resultado['direccion']);
-                $usuarios->setTipoDeUsuario($resultado['tipo_de_usuario']);
-                $usuarios->setEstado($resultado['estado']);
+                $usuario = new Usuario();
+                $usuario->setId($resultado['id_Usuario']);
+                $usuario->setNombres($resultado['nombres']);
+                $usuario->setCorreo($resultado['correo']);
+                $usuario->setCedula($resultado['cedula']);
+                $usuario->setTelefono($resultado['telefono']);
+                $usuario->setDireccion($resultado['direccion']);
+                $usuario->setTipoDeUsuario($resultado['tipoDeUsuario']);
+                $usuario->setEstado($resultado['Estado']);
+                $usuarios[] = $usuario;
             }
             return $usuarios;
         }catch(PDOException $ex){
             echo 'Error al listar usuarios: '.$ex->getMessage();
+            return [];
         }
     }
 
@@ -72,6 +75,34 @@ class UsuarioDAO{
         }catch(PDOException $ex){
             echo 'Error al buscar usuario por id: '.$ex->getMessage();
             return null;
+        }
+    }
+
+    public function selectByStatus($estado){
+        try{
+            $query = "SELECT * FROM usuario WHERE Estado = :estado";
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
+            $stmt->execute();
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $usuarios = [];
+            foreach($resultados as $resultado){
+                $usuario = new Usuario();
+                $usuario->setId($resultado['id_Usuario']);
+                $usuario->setNombres($resultado['nombres']);
+                $usuario->setCorreo($resultado['correo']);
+                $usuario->setCedula($resultado['cedula']);
+                $usuario->setTelefono($resultado['telefono']);
+                $usuario->setDireccion($resultado['direccion']);
+                $usuario->setTipoDeUsuario($resultado['tipoDeUsuario']);
+                $usuario->setEstado($resultado['Estado']);
+                $usuarios[] = $usuario;
+            }
+            return $usuarios;
+        }catch(PDOException $ex){
+            echo 'Error al listar usuarios por estado: '.$ex->getMessage();
+            return [];
         }
     }
 
