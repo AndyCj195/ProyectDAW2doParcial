@@ -3,7 +3,7 @@
     <div class="row">
         <!-- Formulario de búsqueda -->
         <div class="col-sm-6">
-            <form action="index.php?c=gestionmateriales&f=search" method="GET">
+            <form action="index.php?c=MaterialesController&f=search" method="GET">
                 <input 
                     type="text" 
                     name="search" 
@@ -44,19 +44,19 @@
                 <?php if (!empty($resultados)) { ?>
                     <?php foreach ($resultados as $fila) { ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($fila['tipoDeMateriales']); ?></td>
-                            <td><?php echo htmlspecialchars($fila['cantidadTotalKg']); ?></td>
-                            <td><?php echo htmlspecialchars($fila['estadoDelMaterial']); ?></td>
-                            <td><?php echo htmlspecialchars($fila['comunidadZonaAsociada']); ?></td>
-                            <td><?php echo htmlspecialchars($fila['empresaAsignada']); ?></td>
+                            <td><?php echo htmlspecialchars($fila->getTipoDeMateriales()); ?></td>
+                            <td><?php echo htmlspecialchars($fila->getCantidadTotalKg()); ?></td>
+                            <td><?php echo htmlspecialchars($fila->getEstadoDelMaterial()); ?></td>
+                            <td><?php echo htmlspecialchars($fila->getComunidadZonaAsociada()); ?></td>
+                            <td><?php echo htmlspecialchars($fila->getEmpresaAsignada()); ?></td>
                             <td>
                                 <a class="btn btn-primary" 
-                                   href="index.php?c=gestionmateriales&f=view_edit&id=<?php echo $fila['id']; ?>">
+                                   href="index.php?c=MaterialesController&f=view_edit&id=<?php echo $fila->getId(); ?>">
                                     Editar
                                 </a>
                                 <a class="btn btn-danger" 
                                    onclick="return confirm('¿Está seguro de eliminar este material?');" 
-                                   href="index.php?c=gestionmateriales&f=delete&id=<?php echo $fila['id']; ?>">
+                                   href="index.php?c=MaterialesController&f=delete&id=<?php echo $fila->getId(); ?>">
                                     Eliminar
                                 </a>
                             </td>

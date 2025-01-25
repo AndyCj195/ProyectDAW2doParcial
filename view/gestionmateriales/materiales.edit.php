@@ -1,7 +1,7 @@
 <div class="container">
     <h2><?php echo $titulo; ?></h2>
     <div class="card card-body">
-        <form action="index.php?c=gestionmateriales&f=edit" method="POST" name="formMaterialEdit" id="formMaterialEdit">
+        <form action="index.php?c=MaterialesController&f=edit" method="POST" name="formMaterialEdit" id="formMaterialEdit">
             
             <!-- Campo oculto para enviar el ID del material -->
             <input type="hidden" name="id" id="id" value="<?php echo $material["id"]; ?>" />
@@ -64,7 +64,7 @@
                 <div class="form-group mx-auto">
                     <button type="submit" class="btn btn-primary" 
                             onclick="if (!confirm('¿Está seguro de modificar este material?')) return false;">Guardar</button>
-                    <a href="index.php?c=gestionmateriales&f=index" class="btn btn-secondary">Cancelar</a>
+                    <a href="index.php?c=MaterialesController&f=index" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>
