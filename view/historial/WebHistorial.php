@@ -129,6 +129,8 @@ require_once 'Config/config.php'; // Asegúrate de que esta ruta sea correcta
 
         <!-- Formulario para buscar registros -->
         <form action="index.php?c=Historial&f=index" method="get" style="margin-top: 20px;">
+            <input type="hidden" name="c" value="Historial">
+            <input type="hidden" name="f" value="index">
             <input type="text" name="search" placeholder="Buscar registros..." value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
             <button type="submit">Buscar</button>
         </form>
