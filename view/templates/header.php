@@ -22,11 +22,6 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                 <div class="header-botones">
                     <?php if ($tipoDeUsuario === null): ?>
                         <div id="botones-registro">
-<<<<<<< HEAD
-                            <li><button onclick="location.href='index.php?c=Usuario&f=index'">Registrarse</button></li>
-                            <li><button onclick="location.href='index.php?c=index&f=index&p=login'">Iniciar Sesión</button></li>
-                            <li><button onclick="location.href='index.php?c=Materiales&f=new'">Crear Nuevo Material</button></li>
-=======
                             <button onclick="location.href='index.php?c=Usuario&f=index'">Registrarse</button>
                             <button onclick="location.href='index.php?c=index&f=index&p=login'">Iniciar Sesión</button>
                         </div>
@@ -42,29 +37,8 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                     <?php else: ?> 
                         <div id="botones-registro">
                             <button onclick="location.href='index.php?c=Usuario&f=logout'" style="background-color: #e6e6e6; border: 1px solid #e6e6e6; color: #6d9f71; text-decoration: none;">Cerrar Sesión</button>
->>>>>>> master
                         </div>
                         <!-- Opciones según el tipo de usuario -->
-<<<<<<< HEAD
-                        <div class="botones-header">
-                            <li><button onclick="location.href='index.php'">Inicio</button></li>
-                            <?php if ($tipoDeUsuario === 'Admin'): ?>
-                                <!-- Opciones para Administrador -->
-                                <li><button onclick="location.href='index.php?c=Admin&f=dashboard'">Dashboard Admin</button></li>
-                                <li><button onclick="location.href='index.php?c=Admin&f=manageUsers'">Gestionar Usuarios</button></li>
-                                
-                            <?php elseif ($tipoDeUsuario === 'Empresa'): ?>
-                                <!-- Opciones para Empresa -->
-                                <li><button onclick="location.href='index.php?c=Empresa&f=manage'">Gestionar Empresa</button></li>
-                                <li><button onclick="location.href='index.php?c=Empresa&f=reports'">Reportes</button></li>
-                            <?php else: ?>
-                                <!-- Opciones para Usuario Normal -->
-                                <li><button onclick="location.href='index.php?c=Usuario&f=perfil'">Mi Perfil</button></li>
-                                <li><button onclick="location.href='index.php?c=Usuario&f=misReciclajes'">Mis Reciclajes</button></li>
-                            <?php endif; ?>
-                            <!-- Botón para cerrar sesión -->
-                            <li><button onclick="location.href='index.php?c=Usuario&f=logout'">Cerrar Sesión</button></li>
-=======
                         <div id="botones-pagina">
                             <nav>
                                 <ul class="menu">
@@ -84,7 +58,6 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                                     <?php endif; ?>
                                 </ul>
                             </nav>
->>>>>>> master
                         </div>
                     <?php endif; ?>
                 </div>
