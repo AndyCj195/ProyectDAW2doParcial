@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Formulario de Consulta para Reciclaje</h1>
-    <form method="POST" action="">
+    <form method="POST" actiont="index.php?c=Empresa&f=crear">
         <label>Tipo de Material Solicitado:</label><br>
         <input type="checkbox" name="tipoMaterial[]" value="Papel"> Papel<br>
         <input type="checkbox" name="tipoMaterial[]" value="Plástico"> Plástico<br>
@@ -23,7 +23,16 @@
         <label for="cantidadRequerida">Cantidad Requerida (en kg):</label><br>
         <input type="number" name="cantidadRequerida" id="cantidadRequerida" step="0.01" required><br><br>
 
+        <label for="estado">Estado de Solicitud:</label>
+        <select id="estado" name="estado" required>
+            <option value="">Selecciona un estado</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="en_proceso">En Proceso</option>
+            <option value="completado">Completado</option>
+        </select>
+
         <button type="submit">Enviar Solicitud</button>
     </form>
 </body>
 </html>
+

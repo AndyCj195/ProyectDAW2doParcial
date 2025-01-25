@@ -14,6 +14,8 @@ define("VUSUARIO","view/usuarios/usuarios.");
 
 define("VRUTAS","view/rutas/rutas.");
 
+define("VEMPRESA","view/empresa/empresa.");
+
 
 //conexion a la base de datos
 define("DB_NAME","daw_dbproyecto");

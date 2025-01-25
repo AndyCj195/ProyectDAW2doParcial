@@ -35,9 +35,10 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                                 <!-- Opciones para Administrador -->
                                 <li><button onclick="location.href='index.php?c=Admin&f=dashboard'">Dashboard Admin</button></li>
                                 <li><button onclick="location.href='index.php?c=Admin&f=manageUsers'">Gestionar Rutas</button></li>
+                               
                             <?php elseif ($tipoDeUsuario === 'Empresa'): ?>
                                 <!-- Opciones para Empresa -->
-                                <li><button onclick="location.href='index.php?c=Empresa&f=manage'">Gestionar Empresa</button></li>
+                                <li><button onclick="location.href='index.php?c=Empresa&f=index'">Gestionar Empresa</button></li>
                                 <li><button onclick="location.href='index.php?c=Empresa&f=reports'">Reportes</button></li>
                             <?php else: ?>
                                 <!-- Opciones para Usuario Normal -->
