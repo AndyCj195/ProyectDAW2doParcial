@@ -1,48 +1,46 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php require_once HEADER; ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Consulta</title>
-</head>
+<main>
+    <div class="contenedorform">
+        <h1>Editar Empresa</h1>
+        <form action="index.php?c=Empresa&f=edit&id=<?php echo $empresa['id'] ?>" method="POST">
+            <label for="materiales">Tipo de Materiales:</label>
+            <div>
+            <?php
+            // Obtener los materiales seleccionados
+            $materialesSeleccionados = explode(", ", $empresa['tipoDeMaterialSolicitado']);
+            ?>
+            <label><input type="checkbox" value="Plástico" <?php if(in_array("Plástico", $materialesSeleccionados)) { echo 'checked="checked"'; } ?> name="materiales[]"> Plástico</label>
+            <label><input type="checkbox" value="Vidrio" <?php if(in_array("Vidrio", $materialesSeleccionados)) { echo 'checked="checked"'; } ?> name="materiales[]"> Vidrio</label>
+            <label><input type="checkbox" value="Metal" <?php if(in_array("Metal", $materialesSeleccionados)) { echo 'checked="checked"'; } ?> name="materiales[]"> Metal</label>
+            <label><input type="checkbox" value="Madera" <?php if(in_array("Madera", $materialesSeleccionados)) { echo 'checked="checked"'; } ?> name="materiales[]"> Madera</label>
+            <label><input type="checkbox" value="Cartón" <?php if(in_array("Cartón", $materialesSeleccionados)) { echo 'checked="checked"'; } ?> name="materiales[]"> Cartón</label>
+            <label><input type="checkbox" value="Papel" <?php if(in_array("Papel", $materialesSeleccionados)) { echo 'checked="checked"'; } ?> name="materiales[]"> Papel</label>
+            </div>
 
-<body>
-    <h1>Editar Solicitud</h1>
-    <form action="index.php?page=listar" method="post">
-        <input type="hidden" name="id" value="1">
-
-        <label for="materiales">Tipo de Materiales:</label>
-        <div>
-            <label><input type="checkbox" name="materiales[]" value="Plástico" checked> Plástico</label>
-            <label><input type="checkbox" name="materiales[]" value="Vidrio"> Vidrio</label>
-            <label><input type="checkbox" name="materiales[]" value="Papel"> Papel</label>
-            <label><input type="checkbox" name="materiales[]" value="Metal"> Metal</label>
-        </div>
-
-        <label for="zona">Zona:</label>
-        <select name="zona" required>
-            <option value="Norte" selected>Norte</option>
-            <option value="Sur">Sur</option>
-            <option value="Este">Este</option>
-            <option value="Oeste">Oeste</option>
-        </select>
-
-        <label for="estado">Estado de Solicitud:</label>
-        <select name="estado" required>
-            <option value="Pendiente" selected>Pendiente</option>
-            <option value="En Proceso">En Proceso</option>
-            <option value="Completado">Completado</option>
-        </select>
-
-        <label for="fecha_recoleccion">Fecha de Recolección:</label>
-        <input type="date" name="fecha_recoleccion" value="2025-01-30" required>
-
-        <label for="cantidad">Cantidad Requerida:</label>
-        <input type="number" name="cantidad" value="50" required>
-
-        <button type="submit">Actualizar</button>
-    </form>
-</body>
-
-</html>
+            <div>
+                <label for="zona">Zona:</label>
+                <input type="text" name="zona" value="<?php echo htmlspecialchars($empresa['zonaComunidadConsultada']); ?>" required>
+            </div>
+            <div>
+                <label for="estado">Estado de la Solicitud:</label>
+                <select name="estado">
+                    <option value="">Selecciones...</option>
+                    <option value="Pendiente" <?php echo $empresa['estadoDeLaSolicitud'] === 'Pendiente' ? 'selected' : ''; ?>>Pendiente</option>
+                    <option value="Aprobado" <?php echo $empresa['estadoDeLaSolicitud'] === 'Aprobado' ? 'selected' : ''; ?>>Aprobado</option>
+                    <option value="Rechazado" <?php echo $empresa['estadoDeLaSolicitud'] === 'Rechazado' ? 'selected' : ''; ?>>Rechazado</option>
+                </select>
+            </div>
+            <div>
+                <label for="fecha_recoleccion">Fecha Estimada de Recolección:</label>
+                <input type="date" name="fecha_recoleccion" value="<?php echo htmlspecialchars($empresa['fechaEstimadaDeRecoleccion']); ?>" required>
+            </div>
+            <div>
+                <label for="cantidad">Cantidad Requerida:</label>
+                <input type="number" name="cantidad" value="<?php echo htmlspecialchars($empresa['cantidadRequerida']); ?>" required>
+            </div>
+            <button type="submit">Actualizar Empresa</button>
+        </form>
+    </div>
+</main>
+<?php require_once FOOTER; ?>

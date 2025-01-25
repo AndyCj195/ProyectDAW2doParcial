@@ -49,7 +49,7 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                                         <li><a href="index.php?c=Usuario&f=listUser">Gestionar Usuarios</a></li>
                                     <?php elseif ($tipoDeUsuario === 'Empresa'): ?>
                                         <!-- Opciones para Empresa -->
-                                        <li><a href="index.php?c=Empresa&f=manage">Gestionar Empresa</a></li>
+                                        <li><a href="index.php?c=Empresa&f=index">Gestionar Empresa</a></li>
                                         <li><a href="index.php?c=Empresa&f=reports">Reportes</a></li>
                                     <?php else: ?>
                                         <!-- Opciones para Usuario Normal -->

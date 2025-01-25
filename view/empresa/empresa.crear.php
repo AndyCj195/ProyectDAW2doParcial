@@ -1,38 +1,101 @@
+<?php require_once HEADER; ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Consulta</title>
+    <style>
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+
+        .contenedorform {        
+            padding: 25px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .contenedorform h1 {
+            text-align: center;
+        }
+
+        .contenedorform form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contenedorform label {
+            margin-top: 20px;
+        }
+
+        .contenedorform input,
+        .contenedorform select {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .contenedorform button {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color:rgb(44, 126, 28);
+            color: white;
+            cursor: pointer;
+        }
+
+        .contenedorform div {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Formulario de Consulta para Reciclaje</h1>
-    <form method="POST" actiont="index.php?c=Empresa&f=crear">
-        <label>Tipo de Material Solicitado:</label><br>
-        <input type="checkbox" name="tipoMaterial[]" value="Papel"> Papel<br>
-        <input type="checkbox" name="tipoMaterial[]" value="Plástico"> Plástico<br>
-        <input type="checkbox" name="tipoMaterial[]" value="Vidrio"> Vidrio<br>
-        <input type="checkbox" name="tipoMaterial[]" value="Metal"> Metal<br><br>
 
-        <label for="zonaComunidad">Zona o Comunidad Consultada:</label><br>
-        <input type="text" name="zonaComunidad" id="zonaComunidad" required><br><br>
+    <main>
+        <div class="contenedorform">
+            <h1>Formulario de Consulta para Reciclaje</h1>
+            <form action="index.php?c=Empresa&f=crear" method="POST">
+                <label for="materiales">Tipo de Materiales:</label>
+                <div>
+                    <label><input type="checkbox" name="materiales[]" value="Plástico"> Plástico</label>
+                    <label><input type="checkbox" name="materiales[]" value="Vidrio"> Vidrio</label>
+                    <label><input type="checkbox" name="materiales[]" value="Metal"> Metal</label>
+                    <label><input type="checkbox" name="materiales[]" value="Madera"> Madera</label>
+                    <label><input type="checkbox" name="materiales[]" value="Cartón"> Cartón</label>
+                    <label><input type="checkbox" name="materiales[]" value="Papel"> Papel</label>
 
-        <label for="fechaEstimada">Fecha Estimada de Recolección:</label><br>
-        <input type="date" name="fechaEstimada" id="fechaEstimada"><br><br>
+                </div>
+                <label for="zona">Zona:</label>
+                <input type="text" name="zona" required>
 
-        <label for="cantidadRequerida">Cantidad Requerida (en kg):</label><br>
-        <input type="number" name="cantidadRequerida" id="cantidadRequerida" step="0.01" required><br><br>
+                <label for="estado">Estado de la Solicitud:</label>
+                <select name="estado" required>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Aprobado">Aprobado</option>
+                    <option value="Rechazado">Rechazado</option>
+                </select>
 
-        <label for="estado">Estado de Solicitud:</label>
-        <select id="estado" name="estado" required>
-            <option value="">Selecciona un estado</option>
-            <option value="pendiente">Pendiente</option>
-            <option value="en_proceso">En Proceso</option>
-            <option value="completado">Completado</option>
-        </select>
+                <label for="fecha_recoleccion">Fecha Estimada de Recolección:</label>
+                <input type="date" name="fecha_recoleccion" required>
 
-        <button type="submit">Enviar Solicitud</button>
-    </form>
+                <label for="cantidad">Cantidad Requerida:</label>
+                <input type="number" name="cantidad" required>
+
+                <button type="submit">Crear Empresa</button>
+            </form>
+        </div>
+    </main>
 </body>
-</html>
 
+</html>
+<?php require_once FOOTER; ?>

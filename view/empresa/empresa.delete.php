@@ -10,7 +10,7 @@
 <body>
     <h2>Eliminar Solicitud</h2>
     <p>¿Estás seguro de que deseas eliminar esta solicitud?</p>
-    <form action="index.php?page=listar" method="post">
+    <form action="index.php?c=Empresa&f=delete" method="post">
         <input type="hidden" name="id" value="1">
         <button type="submit">Sí, Eliminar</button>
         <a href="index.php?page=listar">Cancelar</a>
