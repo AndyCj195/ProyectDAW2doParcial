@@ -1,7 +1,7 @@
 <div class="container">
     <h2><?php echo 'Gestión de Materiales'; ?></h2>
     <div class="row">
-        <!-- Formulario de búsqueda -->
+        <!-- Formulario de búsquedasss -->
         <div class="col-sm-6">
             <form action="index.php?c=MaterialesController&f=search" method="GET">
                 <input 
