@@ -1,3 +1,4 @@
+
 <?php require_once HEADER ?>
 <main style="padding: 20px; background-color: #f0f8f0; font-family: Arial, sans-serif;">
     <h1 style="color: #2a4d2a; text-align: center; margin-bottom: 20px;">Listado de Rutas de Recolección</h1>
@@ -36,7 +37,9 @@
                             <td style="padding: 10px; text-align: center;"> 
                                 <a href="index.php?c=Rutas&f=editForm&id=<?php echo $ruta->getId(); ?>" style="color: #007bff; text-decoration: none;">Editar</a>
                                 &nbsp;|&nbsp;
-                                <a href="index.php?c=Rutas&f=delete&id=<?php echo $ruta->getId(); ?>" style="color: #e53935; text-decoration: none;" onclick="return confirm('¿Estás seguro de eliminar esta ruta?')">Eliminar</a>
+                                <a href="index.php?c=Rutas&f=delete&id=<?php echo $ruta->getId(); ?>" style="color: #e53935; text-decoration: none;" onclick="return confirm('¿Estás seguro de eliminar esta ruta?')">Eliminar
+</a>
+
                             </td>
                         <?php endif; ?>  
                     </tr>

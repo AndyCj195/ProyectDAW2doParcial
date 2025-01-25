@@ -16,16 +16,12 @@ class RutasRecoleccionDAO {
                       VALUES (:FechaDeRecoleccion, :HoraDeRecoleccion, :materialesARecoger, :EmpresaEncargada, :SectorCubierto, :VehiculoAsignado)";
             $stmt = $this->conexion->prepare($query);
     
-            // Variables asignadas
             $fechaDeRecoleccion = $ruta->getFechaDeRecoleccion();
             $horaDeRecoleccion = $ruta->getHoraDeRecoleccion();
             $materialesARecoger = $ruta->getMaterialesARecoger();
             $empresaEncargada = $ruta->getEmpresaEncargada();
             $sectorCubierto = $ruta->getSectorCubierto();
             $vehiculoAsignado = $ruta->getVehiculoAsignado();
-    
-            var_dump($fechaDeRecoleccion, $horaDeRecoleccion, $materialesARecoger, $empresaEncargada, $sectorCubierto, $vehiculoAsignado);
-            exit; // Verifica los valores antes de ejecutar la consulta
     
             $stmt->bindParam(':FechaDeRecoleccion', $fechaDeRecoleccion, PDO::PARAM_STR);
             $stmt->bindParam(':HoraDeRecoleccion', $horaDeRecoleccion, PDO::PARAM_STR);
@@ -34,13 +30,19 @@ class RutasRecoleccionDAO {
             $stmt->bindParam(':SectorCubierto', $sectorCubierto, PDO::PARAM_STR);
             $stmt->bindParam(':VehiculoAsignado', $vehiculoAsignado, PDO::PARAM_STR);
     
-            return $stmt->execute();
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                error_log("Error en la consulta: " . implode(", ", $stmt->errorInfo()));
+                return false;
+            }
         } catch (PDOException $ex) {
             error_log("Error al crear ruta de recolección: " . $ex->getMessage());
-            echo "Error detallado: " . $ex->getMessage();
             return false;
         }
     }
+    
+    
     
     
     

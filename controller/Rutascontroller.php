@@ -16,7 +16,7 @@ class RutasController {
             require_once 'view/RutasRecoleccion/RutasR.Verlista.php'; // Vista que lista todas las rutas
         } catch (Exception $e) {
             echo "Error al cargar las rutas: " . $e->getMessage();
-        } //require_once VRUTAS."Verlista.php";
+        } 
     }
 
     public function createForm() {
@@ -25,7 +25,7 @@ class RutasController {
     }
 
 
-    public function create() {
+    public function create(): void {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fecha = $_POST['FechaDeRecoleccion'];
             $hora = $_POST['HoraDeRecoleccion'];
@@ -33,9 +33,9 @@ class RutasController {
             $empresa = $_POST['EmpresaEncargada'];
             $sector = $_POST['SectorCubierto'];
             $vehiculo = $_POST['VehiculoAsignado'];
-
+    
             $rutaDTO = new RutasRecoleccionDTO(null, $fecha, $hora, $materiales, $empresa, $sector, $vehiculo);
-
+    
             if ($this->rutaDAO->create($rutaDTO)) {
                 header("Location: index.php?c=Rutas&f=index");
                 exit;
@@ -44,6 +44,8 @@ class RutasController {
             }
         }
     }
+    
+    
 
 
     public function editForm() {
@@ -98,6 +100,12 @@ class RutasController {
 
  
     public function delete($id) {
+        // Validación básica del ID
+        if (!$id || !is_numeric($id)) {
+            echo "ID no válido para eliminar.";
+            return;
+        }
+
         if ($this->rutaDAO->delete($id)) {
             header("Location: index.php?c=Rutas&f=index");
             exit;

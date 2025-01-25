@@ -1,5 +1,4 @@
 <?php
-// Autor: CESAR XAVIER VILLACIS ALVIA
 require_once 'controller/RutasController.php';
 ?>
 
@@ -93,7 +92,7 @@ require_once 'controller/RutasController.php';
         <label for="VehiculoAsignado">Vehículo Asignado:</label>
         <input type="text" name="VehiculoAsignado" value="<?php echo htmlspecialchars($ruta['VehiculoAsignado']); ?>">
 
-        <button type="submit" class="btn">Actualizar</button>
+        <button type="submit" onclick="if(!confirm('¿Está seguro de modificar la ruta?')) return false;">Actualizar</button>
     </form>
 </body>
 </html>

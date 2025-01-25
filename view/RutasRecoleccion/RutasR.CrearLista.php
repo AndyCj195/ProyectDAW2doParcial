@@ -87,7 +87,8 @@
         <label for="VehiculoAsignado">Vehículo Asignado:</label>
         <input type="text" name="VehiculoAsignado" id="VehiculoAsignado">
 
-        <button type="submit" class="btn">Guardar</button>
+        <button type="submit" onclick="if (!confirm('Esta seguro de crear la ruta?')) return false;">Actualizar</button>
+
     </form>
 </body>
 </html>

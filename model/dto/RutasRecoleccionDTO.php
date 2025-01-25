@@ -1,5 +1,5 @@
 <?php
-//autor: CESAR XAVIER VILLACIS ALVIA
+// Autor: CESAR XAVIER VILLACIS ALVIA
 class RutasRecoleccionDTO {
     private $id_RutasRecoleccion;
     private $FechaDeRecoleccion;
@@ -10,10 +10,25 @@ class RutasRecoleccionDTO {
     private $VehiculoAsignado;
 
     // Constructor para inicializar propiedades
-    public function __construct() {
-        
+    public function __construct(
+        $id_RutasRecoleccion = null,
+        $FechaDeRecoleccion = null,
+        $HoraDeRecoleccion = null,
+        $materialesARecoger = null,
+        $EmpresaEncargada = null,
+        $SectorCubierto = null,
+        $VehiculoAsignado = null
+    ) {
+        $this->id_RutasRecoleccion = $id_RutasRecoleccion;
+        $this->FechaDeRecoleccion = $FechaDeRecoleccion;
+        $this->HoraDeRecoleccion = $HoraDeRecoleccion;
+        $this->materialesARecoger = $materialesARecoger;
+        $this->EmpresaEncargada = $EmpresaEncargada;
+        $this->SectorCubierto = $SectorCubierto;
+        $this->VehiculoAsignado = $VehiculoAsignado;
     }
 
+    // Métodos getters
     public function getId() {
         return $this->id_RutasRecoleccion;
     }
@@ -42,6 +57,7 @@ class RutasRecoleccionDTO {
         return $this->VehiculoAsignado;
     }
 
+    // Métodos setters
     public function setId($id_RutasRecoleccion) {
         $this->id_RutasRecoleccion = $id_RutasRecoleccion;
     }
