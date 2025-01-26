@@ -53,11 +53,13 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                                         <!-- Opciones para Empresa -->
                                         <li><a href="index.php?c=Empresa&f=index">Gestionar Empresa</a></li>
                                         <li><a href="index.php?c=Empresa&f=reports">Reportes</a></li>
+                                        <li><a href="index.php?c=Rutas&f=createform">Crear Nueva Ruta</a></li>
+                                        <li><a href="index.php?c=Rutas&f=index">Gestionar Rutas</a></li>
                                         <li><a href="index.php?c=Materiales&f=search">Materiales Gestionados</a></li>
                                     <?php else: ?>
                                         <!-- Opciones para Usuario Normal -->
                                         <li><a href="index.php?c=Usuario&f=perfil">Mi Perfil</a></li>
-                                        <li><a href="index.php?c=Usuario&f=misReciclajes">Rutas de Recoleccion</a></li>
+                                        <li><a href="index.php?c=Rutas&f=index">Ver Rutas</a></li>
                                         <li><a href="index.php?c=Materiales&f=search">Materiales Gestionados</a></li>
                                     <?php endif; ?>
                                 </ul>
