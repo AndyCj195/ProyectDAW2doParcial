@@ -151,19 +151,7 @@ class MaterialesDAO {
         }
     }
 
-    // Método para eliminar lógicamente un registro
-    public function logicalDelete($id) {
-        try {
-            $sql = "UPDATE gestionmateriales SET estadoDelMaterial = 'No disponible' WHERE id = :id";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            $res = $stmt->execute();
-            return $res;
-        } catch (PDOException $e) {
-            error_log("Error en logicalDelete de GestionMaterialesDAO: " . $e->getMessage());
-            return false;
-        }
-    }
+    
 }
 
 ?>

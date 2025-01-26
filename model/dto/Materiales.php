@@ -1,5 +1,6 @@
 
 <?php
+//autor:Arroba Carrillo Omar Andrés
 // DTO: Data Transfer Object
 class Materiales {
     // Propiedades

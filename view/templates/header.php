@@ -10,6 +10,7 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/styleNew.css">
 
         <title>Usuario</title>
     </head>
@@ -47,14 +48,17 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                                         <!-- Opciones para Administrador -->
                                         <li><a href="index.php?c=Admin&f=manageUsers">Gestionar Rutas</a></li>
                                         <li><a href="index.php?c=Usuario&f=listUser">Gestionar Usuarios</a></li>
+                                        <li><a href="index.php?c=Materiales&f=search">Gestionar Lista de Materiales</a></li>
                                     <?php elseif ($tipoDeUsuario === 'Empresa'): ?>
                                         <!-- Opciones para Empresa -->
                                         <li><a href="index.php?c=Empresa&f=manage">Gestionar Empresa</a></li>
                                         <li><a href="index.php?c=Empresa&f=reports">Reportes</a></li>
+                                        <li><a href="index.php?c=Materiales&f=search">Materiales Gestionados</a></li>
                                     <?php else: ?>
                                         <!-- Opciones para Usuario Normal -->
                                         <li><a href="index.php?c=Usuario&f=perfil">Mi Perfil</a></li>
                                         <li><a href="index.php?c=Usuario&f=misReciclajes">Rutas de Recoleccion</a></li>
+                                        <li><a href="index.php?c=Materiales&f=search">Materiales Gestionados</a></li>
                                     <?php endif; ?>
                                 </ul>
                             </nav>

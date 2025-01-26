@@ -1,4 +1,5 @@
 <?php
+//autor:Arroba Carrillo Omar Andrés
 require_once 'model/dto/Materiales.php';
 require_once 'model/dao/MaterialesDAO.php';
 

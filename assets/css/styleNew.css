@@ -1,0 +1,64 @@
+/* Contenedor principal para centrar y dar estilo */
+#principal{
+    width: 60%;
+    margin: 0 auto; 
+    padding: 20px;
+    background-color: white; 
+}
+
+/* Formulario con columnas flexibles y separación entre elementos */
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+/* Estilo general para los elementos */
+.elemento{
+    width: 100%;
+}
+
+/* Estilo de los labels */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Estilo de los inputs, select y botones */
+input[type="text"], 
+input[type="number"], 
+select, 
+button.btn-light, 
+a.btn-secondary {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* Botón primario */
+button.btn-light{
+    background-color: #1eda69;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    color: white;
+}
+
+/* Botón secundario */
+a.btn-secondary {
+    text-decoration: none;
+    background-color: #6c757d;
+    color: white;
+    padding: 10px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Espaciado entre botones */
+button, a {
+    margin-top: 10px;
+}
+
+
