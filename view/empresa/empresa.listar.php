@@ -78,7 +78,7 @@
 
 <body>
     <div class="contenedorl">
-        <h1>Listado de Empresas</h1>
+        <h1>Listado de Solicitudes Empresas</h1>
         <div class="botonc">
         <a href="index.php?c=Empresa&f=crear">Crear Nueva Empresa</a>
         </div>

@@ -11,7 +11,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 70vh;
+            height: 80vh;
         }
 
         .contenedorform {        
@@ -36,9 +36,9 @@
 
         .contenedorform input,
         .contenedorform select {
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
             border: 1px solid #ccc;
         }
 
@@ -63,7 +63,7 @@
 
     <main>
         <div class="contenedorform">
-            <h1>Formulario de Consulta para Reciclaje</h1>
+            <h1>Solicitud De Reciclaje</h1>
             <form action="index.php?c=Empresa&f=crear" method="POST">
                 <label for="materiales">Tipo de Materiales:</label>
                 <div>
