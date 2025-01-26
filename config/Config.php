@@ -17,6 +17,10 @@ define("VRUTAS","view/rutas/rutas.");
 define("VEMPRESA","view/empresa/empresa.");
 
 
+//rutas de vistas modulo materiales
+define("VMATERIALES","view/gestionmateriales/materiales.");
+
+
 //conexion a la base de datos
 define("DB_NAME","daw_dbproyecto");
 define("DB_USER","root");
