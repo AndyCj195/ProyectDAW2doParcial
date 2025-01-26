@@ -1,3 +1,4 @@
+<!-- Autor: Ortuño Sánchez Juliet Diocelin-->
 <?php
 
 class Empresa{

@@ -1,3 +1,4 @@
+<!-- Autor: Ortuño Sánchez Juliet Diocelin-->
 <?php require_once HEADER; ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,7 +15,7 @@
             height: 80vh;
         }
 
-        .contenedorform {        
+        .contenedorform {         
             padding: 25px;
             background-color: white;
             border: 1px solid #ccc;

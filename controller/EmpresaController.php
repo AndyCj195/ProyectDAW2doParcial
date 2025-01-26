@@ -1,3 +1,4 @@
+<!-- Autor: Ortuño Sánchez Juliet Diocelin-->
 <?php
 require_once 'model/dao/EmpresaDao.php';
 require_once 'model/dto/Empresa.php';

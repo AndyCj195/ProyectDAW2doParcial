@@ -1,3 +1,4 @@
+<!-- Autor: Ortuño Sánchez Juliet Diocelin-->
 <?php require_once HEADER; ?>
 <!DOCTYPE html>
 <html lang="es">
