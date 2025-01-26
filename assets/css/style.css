@@ -14,25 +14,68 @@ body{
     font-family: Arial, sans-serif;
     background-color: #E8F5E9;
 }
+
 header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 20px;
     background-color: #6d9f71;
     color: white;
 }
 
-.header-logo img{
-      width: 100px;
-      height: 100px;
+.header-logo img {
+    width: 100px;
+    height: 100px;
 }
 
-#botones-registro{
+.header-info {
     display: flex;
-    gap: 20px;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
 }
+
+.user-info {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.user-type {
+    margin-left: auto;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-logout {
+    padding: 10px 20px;
+    background-color: #e6e6e6;
+    color: #6d9f71;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btn-logout:hover {
+    background-color: #d6d6d6;
+    border: 1px solid #d6d6d6;
+    color: #5b815e;
+}
+
+#botones-registro {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%;
+}
+
+#botones-registro span {
+    font-size: 16px;
+    color: white;
+}
+
 #botones-registro button{
     padding: 10px 20px;
     background-color: #6d9f71;

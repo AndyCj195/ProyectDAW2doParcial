@@ -1,21 +1,21 @@
 <?php
-    class Conexion{
-        public static function getConexion(){
-            $dsn = "mysql:host=localhost; dbname=". DB_NAME;
-            $conexion = null;
-            if(!isset($conexion)){
-                try{
-                    $conexion = new PDO($dsn, DB_USER, DB_PASS);
-                    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    return $conexion;
-                }catch(Exception $e){
-                    die("El error de Conexión es: ". $e->getMessage());
-                }
+class Conexion {
+    private static $host = '127.0.0.1';
+    private static $pdo = null;
+
+    public static function getConnection() {
+        if (self::$pdo === null) {
+            try {
+                $dsn = "mysql:host=" . self::$host . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+                self::$pdo = new PDO($dsn, DB_USER, DB_PASS);
+                self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Error en la conexión: " . $e->getMessage());
             }
         }
-
-        public static function closeConexion(){
-            $conexion = null;
-        }
+        return self::$pdo;
     }
+}
 ?>
+
+ 

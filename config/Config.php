@@ -12,7 +12,14 @@ define("FOOTER","view/templates/footer.php");
 //rutas de vistas modulo usuario
 define("VUSUARIO","view/usuarios/usuarios.");
 
-define("VRUTAS","view/rutas/rutas.");
+define("VRUTAS","view/RutasRecoleccion/RutasR.");
+
+define("VEMPRESA","view/empresa/empresa.");
+
+define("VHISTORIAL","view/historial/historial.");
+
+//rutas de vistas modulo materiales
+define("VMATERIALES","view/gestionmateriales/materiales.");
 
 
 //conexion a la base de datos
