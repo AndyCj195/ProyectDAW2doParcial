@@ -82,8 +82,8 @@
                 <label for="estado">Estado de la Solicitud:</label>
                 <select name="estado" required>
                     <option value="Pendiente">Pendiente</option>
-                    <option value="Aprobado">Aprobado</option>
-                    <option value="Rechazado">Rechazado</option>
+                    <option value="Aprobada">Aprobada</option>
+                    <option value="Rechazada">Rechazada</option>
                 </select>
 
                 <label for="fecha_recoleccion">Fecha Estimada de Recolección:</label>
