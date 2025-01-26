@@ -11,7 +11,7 @@ class EmpresaDao
     }
 
     // Método para crear una nueva empresa
-    public function crear(Empresa $empresa)
+    public function crear($empresa)
     {
         try {
             $query = "INSERT INTO consultaempresas 
@@ -43,14 +43,15 @@ class EmpresaDao
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
-            $data = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($data) {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
                 $empresa = new Empresa();
-                $empresa->setTipoDeMaterialSolicitado($data['tipoDeMaterialSolicitado']);
-                $empresa->setZonaComunidadConsultada($data['zonaComunidadConsultada']);
-                $empresa->setEstadoDeLaSolicitud($data['estadoDeLaSolicitud']);
-                $empresa->setFechaEstimadaDeRecoleccion($data['fechaEstimadaDeRecoleccion']);
-                $empresa->setCantidadRequerida($data['cantidadRequerida']);
+                $empresa->setId($result['id']);
+                $empresa->setTipoDeMaterialSolicitado($result['tipoDeMaterialSolicitado']);
+                $empresa->setZonaComunidadConsultada($result['zonaComunidadConsultada']);
+                $empresa->setEstadoDeLaSolicitud($result['estadoDeLaSolicitud']);
+                $empresa->setFechaEstimadaDeRecoleccion($result['fechaEstimadaDeRecoleccion']);
+                $empresa->setCantidadRequerida($result['cantidadRequerida']);
                 return $empresa;
             }
             return null; // No se encontró la empresa
@@ -61,7 +62,7 @@ class EmpresaDao
     }
 
     // Método para editar una empresa
-    public function editar(Empresa $empresa)
+    public function editar($empresa)
     {
         try {
             $query = "UPDATE consultaempresas SET 

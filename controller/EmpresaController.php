@@ -24,7 +24,8 @@ class EmpresaController
         
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (!empty($id)) {
-                if ($this->modelo->obtenerPorId($id)) {
+                $empresa = $this->modelo->obtenerPorId($id);
+                if ($empresa) {
                     $titulo = "Editar Empresa";
                     require_once VEMPRESA . 'editar.php'; 
                 } else {
