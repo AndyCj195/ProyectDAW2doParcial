@@ -1,5 +1,7 @@
+<!-- Autor: Chavez Jimenez Andres-->
 <?php require_once HEADER; ?>
 <?php if ($tipoDeUsuario === null): ?>
+
     <style>
         main{
             display: grid;
@@ -249,7 +251,7 @@
     </main>
 <?php else: ?>
     <div>
-        <h1>Bienvenido </h1>
+        <h1>Bienvenido <?php echo $_SESSION['nombres']; ?></h1>
     </div>
 <?php endif; ?>    
 <?php require_once FOOTER; ?>

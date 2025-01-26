@@ -1,9 +1,8 @@
+<!-- Autor: Chavez Jimenez Andres -->
 <?php
 
 require_once 'model/dto/Usuario.php';
 require_once 'model/dao/UsuarioDAO.php';
-
-//Author: Andres Chavez Jimenez
 class UsuarioController{
     private $model;
 

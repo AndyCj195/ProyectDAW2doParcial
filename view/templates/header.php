@@ -29,8 +29,8 @@ $tipoDeUsuario = $_SESSION['tipoDeUsuario'] ?? null;
                             <nav>
                                 <ul class="menu">
                                     <li><a href="index.php">Home</a></li>
-                                    <li><a href="index.php?c=index&f=about">Acerca de</a></li>
-                                    <li><a href="index.php?c=index&f=contact">Contacto</a></li>
+                                    <li><a href="index.php?c=index&f=index&p=about">Acerca de</a></li>
+                                    <li><a href="index.php?c=index&f=index&p=contact">Contacto</a></li>
                                 </ul>
                             </nav>
                         </div> 

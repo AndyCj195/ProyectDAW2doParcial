@@ -1,3 +1,4 @@
+<!--Author: Andres Chavez Jimenez -->   
 <?php
 class Usuario{
     private $id;

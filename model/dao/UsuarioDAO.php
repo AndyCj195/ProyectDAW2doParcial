@@ -1,7 +1,6 @@
+<!--Author: Andres Chavez Jimenez-->   
 <?php
 require_once 'config/Conexion.php';
-
-//Author: Andres Chavez Jimenez
 class UsuarioDAO{
     private $conexion;
 
