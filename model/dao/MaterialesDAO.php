@@ -1,5 +1,5 @@
 <?php
-// autor: Arroba Carrillo Omar Andrés
+//autor: Arroba Carrillo Omar Andrés
 require_once 'config/Conexion.php';
 
 class MaterialesDAO {

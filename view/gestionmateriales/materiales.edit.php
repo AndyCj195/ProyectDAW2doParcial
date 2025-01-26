@@ -1,5 +1,4 @@
 <!--autor:Arroba Carrillo Omar Andrés-->
-
 <?php require_once HEADER; ?>
 
 <div id="principal">
