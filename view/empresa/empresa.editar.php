@@ -68,55 +68,42 @@
         <div class="contenedorform">
         <h1> Editar Solicitud </h1>
         <form action="index.php?c=Empresa&f=edit&id=<?php echo $empresa->getId(); ?>" method="POST">
+            <input type="hidden" name="id" value="<?php echo $empresa->getId(); ?>">
             <label for="materiales">Tipo de Material Solicitado:</label>
-            <?php
-            // Obtener los materiales seleccionados
-            $materialesSeleccionados = explode(", ", $empresa->getTipoDeMaterialSolicitado());
-            ?>
+            <?php $materialesSeleccionados = explode(", ", $empresa->getTipoDeMaterialSolicitado());?>
             <div>
                 <label><input type="checkbox" value="Plástico" <?php if (in_array("Plástico", $materialesSeleccionados))
-                    echo 'checked'; ?> name="materiales[]">
-                    Plástico</label>
+                    echo 'checked'; ?> name="materiales[]">Plástico</label>
                 <label><input type="checkbox" value="Vidrio" <?php if (in_array("Vidrio", $materialesSeleccionados))
-                    echo 'checked'; ?> name="materiales[]">
-                    Vidrio</label>
+                    echo 'checked'; ?> name="materiales[]">Vidrio</label>
                 <label><input type="checkbox" value="Metal" <?php if (in_array("Metal", $materialesSeleccionados))
-                    echo 'checked'; ?> name="materiales[]">
-                    Metal</label>
+                    echo 'checked'; ?> name="materiales[]">Metal</label>
                 <label><input type="checkbox" value="Madera" <?php if (in_array("Madera", $materialesSeleccionados))
-                    echo 'checked'; ?> name="materiales[]">
-                    Madera</label>
+                    echo 'checked'; ?> name="materiales[]">Madera</label>
                 <label><input type="checkbox" value="Cartón" <?php if (in_array("Cartón", $materialesSeleccionados))
-                    echo 'checked'; ?> name="materiales[]">
-                    Cartón</label>
+                    echo 'checked'; ?> name="materiales[]">Cartón</label>
                 <label><input type="checkbox" value="Papel" <?php if (in_array("Papel", $materialesSeleccionados))
-                    echo 'checked'; ?> name="materiales[]">
-                    Papel</label>
+                    echo 'checked'; ?> name="materiales[]">Papel</label>
             </div>
 
             <label for="zona">Zona:</label>
-            <input type="text" name="zona"
-                value="<?php echo htmlspecialchars($empresa->getZonaComunidadConsultada()); ?>" required>
+            <input type="text" name="zona"value="<?php echo htmlspecialchars($empresa->getZonaComunidadConsultada()); ?>" required>
 
             <label for="estado">Estado de la Solicitud:</label>
             <select name="estado">
                 <option value="">Selecciones...</option>
-                <option value="Pendiente" <?php echo $empresa->getEstadoDeLaSolicitud() === 'Pendiente' ? 'selected' : ''; ?>>Pendiente
-                </option>
-                <option value="Aprobado" <?php echo $empresa->getEstadoDeLaSolicitud() === 'Aprobado' ? 'selected' : ''; ?>>Aprobado</option>
-                <option value="Rechazado" <?php echo $empresa->getEstadoDeLaSolicitud() === 'Rechazado' ? 'selected' : ''; ?>>Rechazado
-                </option>
+                <option value="Pendiente" <?php echo $empresa->getEstadoDeLaSolicitud() === 'Pendiente' ? 'selected' : ''; ?>>Pendiente</option>
+                <option value="Aprobada" <?php echo $empresa->getEstadoDeLaSolicitud() === 'Aprobada' ? 'selected' : ''; ?>>Aprobada</option>
+                <option value="Rechazada" <?php echo $empresa->getEstadoDeLaSolicitud() === 'Rechazada' ? 'selected' : ''; ?>>Rechazada</option>
             </select>
 
             <label for="fecha_recoleccion">Fecha Estimada de Recolección:</label>
-            <input type="date" name="fecha_recoleccion"
-                value="<?php echo htmlspecialchars($empresa->getFechaEstimadaDeRecoleccion()); ?>" required>
+            <input type="date" name="fecha_recoleccion" value="<?php echo htmlspecialchars($empresa->getFechaEstimadaDeRecoleccion()); ?>" required>
 
             <label for="cantidad">Cantidad Requerida:</label>
-            <input type="number" name="cantidad"
-                value="<?php echo htmlspecialchars($empresa->getCantidadRequerida()); ?>" required>
-
-            <button type="submit">Actualizar Empresa</button>
+            <input type="number" name="cantidad" value="<?php echo htmlspecialchars($empresa->getCantidadRequerida()); ?>" required>
+            <button type="submit" 
+            onclick="if (!confirm('Esta seguro de modificar el registro?')) return false;">Actualizar Empresa</button>
 
         </form>
         </div>

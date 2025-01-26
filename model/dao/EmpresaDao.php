@@ -61,32 +61,32 @@ class EmpresaDao
             return null;
         }
     }
-
     // Método para editar una empresa
     public function editar($empresa)
-    {
-        try {
-            $query = "UPDATE consultaempresas SET 
-                      tipoDeMaterialSolicitado = :tipoDeMaterialSolicitado,
-                      zonaComunidadConsultada = :zonaComunidadConsultada,
-                      estadoDeLaSolicitud = :estadoDeLaSolicitud,
-                      fechaEstimadaDeRecoleccion = :fechaEstimadaDeRecoleccion,
-                      cantidadRequerida = :cantidadRequerida
-                      WHERE id = :id";
+{
+    try {
+        $query = "UPDATE consultaempresas SET 
+                  tipoDeMaterialSolicitado = :tipoDeMaterialSolicitado,
+                  zonaComunidadConsultada = :zonaComunidadConsultada,
+                  estadoDeLaSolicitud = :estadoDeLaSolicitud,
+                  fechaEstimadaDeRecoleccion = :fechaEstimadaDeRecoleccion,
+                  cantidadRequerida = :cantidadRequerida
+                  WHERE id = :id";
 
-            $stmt = $this->conexion->prepare($query);
-            $stmt->bindParam(':tipoDeMaterialSolicitado', $empresa->getTipoDeMaterialSolicitado(), PDO::PARAM_STR);
-            $stmt->bindParam(':zonaComunidadConsultada', $empresa->getZonaComunidadConsultada(), PDO::PARAM_STR);
-            $stmt->bindParam(':estadoDeLaSolicitud', $empresa->getEstadoDeLaSolicitud(), PDO::PARAM_STR);
-            $stmt->bindParam(':fechaEstimadaDeRecoleccion', $empresa->getFechaEstimadaDeRecoleccion(), PDO::PARAM_STR);
-            $stmt->bindParam(':cantidadRequerida', $empresa->getCantidadRequerida(), PDO::PARAM_INT);
-            $stmt->bindParam(':id', $empresa->getId(), PDO::PARAM_INT); // Asegúrate de que el método getId() esté definido en la clase Empresa ```php
-            return $stmt->execute();
-        } catch (PDOException $ex) {
-            echo 'Error al actualizar la empresa: ' . $ex->getMessage();
-            return false;
-        }
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bindParam(':tipoDeMaterialSolicitado', $empresa->getTipoDeMaterialSolicitado(), PDO::PARAM_STR);
+        $stmt->bindParam(':zonaComunidadConsultada', $empresa->getZonaComunidadConsultada(), PDO::PARAM_STR);
+        $stmt->bindParam(':estadoDeLaSolicitud', $empresa->getEstadoDeLaSolicitud(), PDO::PARAM_STR);
+        $stmt->bindParam(':fechaEstimadaDeRecoleccion', $empresa->getFechaEstimadaDeRecoleccion(), PDO::PARAM_STR);
+        $stmt->bindParam(':cantidadRequerida', $empresa->getCantidadRequerida(), PDO::PARAM_INT);
+        $stmt->bindParam(':id', $empresa->getId(), PDO::PARAM_INT);
+
+        return $stmt->execute();
+    } catch (PDOException $ex) {
+        echo 'Error al actualizar la empresa: ' . $ex->getMessage();
+        return false;
     }
+}
 
     // Método para eliminar una empresa
     public function eliminar($id)
