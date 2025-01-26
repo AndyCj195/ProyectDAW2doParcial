@@ -16,6 +16,7 @@ define("VRUTAS","view/RutasRecoleccion/RutasR.");
 
 define("VEMPRESA","view/empresa/empresa.");
 
+define("VHISTORIAL","view/historial/historial.");
 
 //rutas de vistas modulo materiales
 define("VMATERIALES","view/gestionmateriales/materiales.");

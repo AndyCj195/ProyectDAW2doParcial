@@ -7,7 +7,7 @@ class RutasRecoleccionDAO {
     private $conexion;
 
     public function __construct() {
-        $this->conexion = Conexion::getConexion();
+        $this->conexion = Conexion::getConnection();
     }
 
     public function create(RutasRecoleccionDTO $ruta) {

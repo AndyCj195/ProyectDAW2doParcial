@@ -8,7 +8,7 @@ class EmpresaDao
 
     public function __construct()
     {
-        $this->conexion = Conexion::getConexion();
+        $this->conexion = Conexion::getConnection();
     }
 
     // Método para crear una nueva empresa

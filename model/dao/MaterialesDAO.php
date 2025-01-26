@@ -6,7 +6,7 @@ class MaterialesDAO {
     private $con;
 
     public function __construct() {
-        $this->con = Conexion::getConexion();
+        $this->con = Conexion::getConnection();
     }
 
     // Método para seleccionar todos los registros
