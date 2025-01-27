@@ -67,7 +67,6 @@ $id_usuario = $_SESSION['id_Usuario'] ?? null;
                                     <?php elseif ($tipoDeUsuario === 'Empresa'): ?>
                                         <!-- Opciones para Empresa -->
                                         <li><a href="index.php?c=Historial&f=index">Registrar Materiales</a></li>
-                                        <li><a href="index.php?c=Historial&f=list">Historial</a></li>
                                         <li><a href="index.php?c=Empresa&f=index">Gestionar Empresa</a></li>
                                         <li><a href="index.php?c=Rutas&f=createform">Crear Nueva Ruta</a></li>
                                         <li><a href="index.php?c=Rutas&f=index">Gestionar Rutas</a></li>
