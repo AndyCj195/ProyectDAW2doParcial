@@ -98,9 +98,6 @@
     }
 </style>
 <?php require_once HEADER ?>
-<style>
-    /* Estilos CSS */
-</style>
 <main>
     <!-- Formulario de registro para Empresa o Usuario -->
     <?php if ($_SESSION['tipoDeUsuario'] === 'Empresa' || $_SESSION['tipoDeUsuario'] === 'Usuario'): ?>
@@ -147,8 +144,7 @@
         <form action="index.php?c=Historial&f=index" method="get" style="margin-top: 20px;">
             <input type="hidden" name="c" value="Historial">
             <input type="hidden" name="f" value="index">
-            <input type="text" name="search" placeholder="Buscar registros..."
-                value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+            <input type="text" name="search" placeholder="Buscar por Tipo del Material" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
             <button type="submit">Buscar</button>
         </form>
 
@@ -180,7 +176,7 @@
                                     <a href="index.php?c=Historial&f=index&action=edit&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>">Editar</a>
                                     |
                                     <a href="index.php?c=Historial&f=list&action=delete&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>"
-                                       onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?');">Eliminar</a>
+                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?');">Eliminar</a>
                                 </td>
                             <?php endif; ?>
                         </tr>

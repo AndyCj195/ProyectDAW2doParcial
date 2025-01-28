@@ -1,6 +1,6 @@
 <!--Author: Jorge Suárez Valarezo-->    
 <?php require_once HEADER; ?>
-    <style>
+<style>
         main {
             display: flex;
             flex-direction: column;
@@ -87,86 +87,97 @@
         }
     </style>
 <main>
-    <!-- Formulario de registro para "Empresa" o "Usuario" -->
+    <!-- Formulario de registro para Empresa o Usuario -->
     <?php if ($_SESSION['tipoDeUsuario'] === 'Empresa' || $_SESSION['tipoDeUsuario'] === 'Usuario'): ?>
         <div class="registro-clase">
             <div class="sec_frase">
                 <p>Registra los materiales reciclados por tu <?php echo htmlspecialchars($_SESSION['tipoDeUsuario']); ?>.</p>
             </div>
+            <!-- Formulario para crear/actualizar registros -->
             <form action="index.php?c=Historial&f=index" method="post">
-    <h2><?php echo isset($registroEdit) ? 'Editar Registro' : 'Nuevo Registro'; ?></h2>
+                <h2><?php echo isset($registroEdit) ? 'Editar Registro' : 'Nuevo Registro'; ?></h2>
 
-    <!-- Campo oculto para el ID del historial en caso de edición -->
-    <input type="hidden" name="id_HistorialRegistros" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['id_HistorialRegistros']) : ''; ?>">
+                <!-- Campo oculto para el ID del historial en caso de edición -->
+                <input type="hidden" name="id_HistorialRegistros" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['id_HistorialRegistros']) : ''; ?>">
 
-    <label for="fechaDeRegistro">Fecha de Registro:</label>
-    <input type="datetime-local" name="fechaDeRegistro" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['FechaDeRegistro']) : ''; ?>" required>
+                <label for="fechaDeRegistro">Fecha de Registro:</label>
+                <input type="datetime-local" name="fechaDeRegistro" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['FechaDeRegistro']) : ''; ?>" required>
 
-    <label for="tipoDelMaterial">Tipo del Material:</label>
-    <input type="text" name="tipoDelMaterial" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['TipoDelMaterialReciclado']) : ''; ?>" required>
+                <label for="tipoDelMaterial">Tipo del Material:</label>
+                <input type="text" name="tipoDelMaterial" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['TipoDelMaterialReciclado']) : ''; ?>" required>
 
-    <label for="cantidadReciclada">Cantidad Reciclada (kg):</label>
-    <input type="number" step="1" name="cantidadReciclada" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['CantidadReciclada']) : ''; ?>" required>
+                <label for="cantidadReciclada">Cantidad Reciclada (kg):</label>
+                <input type="number" step="1" name="cantidadReciclada" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['CantidadReciclada']) : ''; ?>" required>
 
-    <label for="estadoDelRegistro">Estado del Registro:</label>
-    <select name="estadoDelRegistro" required>
-        <option value="Pendiente" <?php echo (isset($registroEdit) && $registroEdit['EstadoDelRegistro'] === 'Pendiente') ? 'selected' : ''; ?>>Pendiente</option>
-        <option value="Completado" <?php echo (isset($registroEdit) && $registroEdit['EstadoDelRegistro'] === 'Completado') ? 'selected' : ''; ?>>Completado</option>
-        <option value="Cancelado" <?php echo (isset($registroEdit) && $registroEdit['EstadoDelRegistro'] === 'Cancelado') ? 'selected' : ''; ?>>Cancelado</option>
-    </select>
+                <label for="estadoDelRegistro">Estado del Registro:</label>
+                <select name="estadoDelRegistro" required>
+                    <option value="Pendiente" <?php echo (isset($registroEdit) && $registroEdit['EstadoDelRegistro'] === 'Pendiente') ? 'selected' : ''; ?>>Pendiente</option>
+                    <option value="Completado" <?php echo (isset($registroEdit) && $registroEdit['EstadoDelRegistro'] === 'Completado') ? 'selected' : ''; ?>>Completado</option>
+                    <option value="Cancelado" <?php echo (isset($registroEdit) && $registroEdit['EstadoDelRegistro'] === 'Cancelado') ? 'selected' : ''; ?>>Cancelado</option>
+                </select>
 
-    <label for="empresaRecolectora">Empresa Recolectora:</label>
-    <input type="text" name="empresaRecolectora" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['EmpresaRecolectora']) : ''; ?>" required>
+                <label for="empresaRecolectora">Empresa Recolectora:</label>
+                <input type="text" name="empresaRecolectora" value="<?php echo isset($registroEdit) ? htmlspecialchars($registroEdit['EmpresaRecolectora']) : ''; ?>" required>
 
-    <!-- Botón visible para ambos roles -->
-    <button type="submit" name="action" value="<?php echo isset($registroEdit) ? 'update' : 'create'; ?>">
-        <?php echo isset($registroEdit) ? 'Actualizar' : 'Registrar'; ?>
-    </button>
-</form>
+                <!-- Botón visible para ambos roles -->
+                <button type="submit" name="action" value="<?php echo isset($registroEdit) ? 'update' : 'create'; ?>">
+                    <?php echo isset($registroEdit) ? 'Actualizar' : 'Registrar'; ?>
+                </button>
+            </form>
         </div>
     <?php endif; ?>
 
-    <!-- Tabla de registros -->
+    <!-- Sección de búsqueda y tabla para Empresa o Administrador -->
     <div class="lista-clase">
-    <table>
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Tipo</th>
-            <th>Cantidad</th>
-            <th>Estado</th>
-            <th>Empresa</th>
-            <?php if ($_SESSION['tipoDeUsuario'] === 'Empresa'): ?>
-                <th>Acciones</th>
-            <?php endif; ?>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if (isset($registros) && !empty($registros)): ?>
-            <?php foreach ($registros as $registro): ?>
+        <!-- Formulario para buscar registros -->
+        <form action="index.php?c=Historial&f=index" method="get" style="margin-top: 20px;">
+            <input type="hidden" name="c" value="Historial">
+            <input type="hidden" name="f" value="index">
+            <input type="text" name="search" placeholder="Buscar registros..."
+                value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+            <button type="submit">Buscar</button>
+        </form>
+
+        <!-- Tabla de registros -->
+        <table>
+            <thead>
                 <tr>
-                    <td><?php echo htmlspecialchars($registro['FechaDeRegistro']); ?></td>
-                    <td><?php echo htmlspecialchars($registro['TipoDelMaterialReciclado']); ?></td>
-                    <td><?php echo htmlspecialchars($registro['CantidadReciclada']); ?></td>
-                    <td><?php echo htmlspecialchars($registro['EstadoDelRegistro']); ?></td>
-                    <td><?php echo htmlspecialchars($registro['EmpresaRecolectora']); ?></td>
+                    <th>Fecha de Registro</th>
+                    <th>Tipo de Material</th>
+                    <th>Cantidad Reciclada</th>
+                    <th>Estado del Registro</th>
+                    <th>Empresa Recolectora</th>
                     <?php if ($_SESSION['tipoDeUsuario'] === 'Empresa'): ?>
-                        <td>
-                            <a href="index.php?c=Historial&f=index&action=edit&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>">Editar</a>
-                            |
-                            <a href="index.php?c=Historial&f=list&action=delete&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>" onclick="return confirm('¿Eliminar este registro?');">Eliminar</a>
-                        </td>
+                        <th>Acciones</th>
                     <?php endif; ?>
                 </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="<?php echo ($_SESSION['tipoDeUsuario'] === 'Empresa') ? '6' : '5'; ?>">No hay registros disponibles.</td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
-
+            </thead>
+            <tbody>
+                <?php if (isset($registros) && !empty($registros)): ?>
+                    <?php foreach ($registros as $registro): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($registro['FechaDeRegistro']); ?></td>
+                            <td><?php echo htmlspecialchars($registro['TipoDelMaterialReciclado']); ?></td>
+                            <td><?php echo htmlspecialchars($registro['CantidadReciclada']); ?></td>
+                            <td><?php echo htmlspecialchars($registro['EstadoDelRegistro']); ?></td>
+                            <td><?php echo htmlspecialchars($registro['EmpresaRecolectora']); ?></td>
+                            <?php if ($_SESSION['tipoDeUsuario'] === 'Empresa'): ?>
+                                <td>
+                                    <a href="index.php?c=Historial&f=index&action=edit&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>">Editar</a>
+                                    |
+                                    <a href="index.php?c=Historial&f=list&action=delete&id_HistorialRegistros=<?php echo $registro['id_HistorialRegistros']; ?>"
+                                       onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?');">Eliminar</a>
+                                </td>
+                            <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="<?php echo ($_SESSION['tipoDeUsuario'] === 'Empresa') ? '6' : '5'; ?>" style="text-align: center;">No hay registros disponibles.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
 </main>
 <?php require_once FOOTER; ?>

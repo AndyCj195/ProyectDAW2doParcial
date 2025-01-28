@@ -10,6 +10,7 @@ class HistorialController {
     }
 
     public function index() {
+        $search = ''; // Inicializar la variable de búsqueda
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['action'])) {
                 $action = $_POST['action'];
@@ -22,47 +23,44 @@ class HistorialController {
                 ];
 
                 if ($action === 'create') {
-                    $this->dao->insertRegistro($data); // Insertar nuevo registro
+                    $this->dao->insertRegistro($data);
                 } elseif ($action === 'update') {
                     $data['id_HistorialRegistros'] = $_POST['id_HistorialRegistros'];
-                    $this->dao->updateRegistro($data); // Actualizar registro existente
+                    $this->dao->updateRegistro($data);
                 }
 
-                // Redirigir después de guardar
                 header("Location: index.php?c=Historial&f=list");
                 exit();
             }
         } else {
+            if (isset($_GET['search'])) {
+                $search = $_GET['search']; // Recuperar el término de búsqueda
+                $registros = $this->dao->searchRegistros($search);
+            } else {
+                $registros = $this->dao->getAllRegistros();
+            }
+
             if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['id_HistorialRegistros'])) {
-                // Obtener datos para edición
                 $id_HistorialRegistros = $_GET['id_HistorialRegistros'];
                 $registroEdit = $this->dao->getRegistroById($id_HistorialRegistros);
             }
 
             $titulo = 'Registro de materiales reciclados';
-            $registros = $this->dao->getAllRegistros(); // Obtener todos los registros para mostrarlos
             include 'view/historial/WebHistorial.php';
         }
     }
 
     public function list() {
+        $search = isset($_GET['search']) ? $_GET['search'] : '';
         if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id_HistorialRegistros'])) {
-            // Eliminar registro
             $id_HistorialRegistros = $_GET['id_HistorialRegistros'];
             $this->dao->deleteRegistro($id_HistorialRegistros);
 
-            // Redirigir después de eliminar
             header("Location: index.php?c=Historial&f=list");
             exit();
         }
 
-        if (isset($_GET['search'])) {
-            $search = $_GET['search'];
-            $registros = $this->dao->searchRegistros($search); // Buscar registros
-        } else {
-            $registros = $this->dao->getAllRegistros(); // Obtener todos los registros
-        }
-
+        $registros = $this->dao->searchRegistros($search) ?? $this->dao->getAllRegistros();
         $titulo = 'Historial de Registros';
         include VHISTORIAL . 'list.php';
     }
