@@ -72,7 +72,7 @@
                             </div>
                             <div class="div-contra2">
                                 <label for="idContrasena2">Confirmar Contraseña:</label><br>
-                                <input type="password" id="idContrasena2" name="contrasena">
+                                <input type="password" id="idContrasena2" name="contrasena_confirm">
                                 <div class="error-message" id="error-contrasena2"></div>
                             </div>
                         </div>
