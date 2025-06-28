@@ -1,6 +1,6 @@
 <?php
 //confifuracion para la encriptacion de datos
-define("KEY", "1311200310102002");
+define("KEY", "13112003101020021311200310102002");
 define("METHOD","AES-256-CBC");
 
 //rutas de controladores y funciones

@@ -97,8 +97,8 @@ class UsuarioDAO{
             $cedulaOriginal = $usuario->getCedula();
             $cedulaCifrada = $this->encryptData($cedulaOriginal);
 
-            $telefono = $usuario->getTelefono();
-            $direccion = $usuario->getDireccion();
+            $telefono = $this->encryptData($usuario->getTelefono());
+            $direccion = $this->encryptData($usuario->getDireccion());
             $tipoDeUsuario = $usuario->getTipoDeUsuario();
             $estado = $usuario->getEstado();
 
@@ -227,7 +227,7 @@ class UsuarioDAO{
         $ivlen = openssl_cipher_iv_length(METHOD);
         $iv = openssl_random_pseudo_bytes($ivlen);
 
-        $encrypted = openssl_encrypt($data, METHOD, KEY, 0, $iv);
+        $encrypted = openssl_encrypt($data, METHOD, KEY, OPENSSL_RAW_DATA, $iv);
 
         return base64_encode($iv . $encrypted);
     }
@@ -237,10 +237,13 @@ class UsuarioDAO{
         $data = base64_decode($data);
 
         $ivlen = openssl_cipher_iv_length(METHOD);
+        if(strlen($data) < $ivlen) {
+            return false; // Datos inválidos
+        }
         $iv = substr($data, 0, $ivlen);
-        $encrypted = substr($data, $ivlen);
+        $descrypt = substr($data, $ivlen);
 
-        return openssl_decrypt($encrypted, METHOD, KEY, 0, $iv);
+        return openssl_decrypt($descrypt, METHOD, KEY, OPENSSL_RAW_DATA, $iv);
     }
 
 

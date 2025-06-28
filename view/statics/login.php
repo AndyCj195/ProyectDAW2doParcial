@@ -50,5 +50,39 @@
             </form>
         </div>
     </div>
+    <!-- Agrega en tu archivo login.html antes del cierre del body -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script>
+    const key = CryptoJS.enc.Utf8.parse("13112003101020021311200310102002");
+
+    document.getElementById('form-login').addEventListener('submit', function (e) {
+        const correoInput = document.getElementById('correo');
+        const contrasenaInput = document.getElementById('contrasena');
+
+        const ivCorreo = CryptoJS.lib.WordArray.random(16);
+        const ivPass = CryptoJS.lib.WordArray.random(16);
+
+        const correoEncrypted = CryptoJS.AES.encrypt(correoInput.value, key, {
+            iv: ivCorreo,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
+
+        const contrasenaEncrypted = CryptoJS.AES.encrypt(contrasenaInput.value, key, {
+            iv: ivPass,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
+
+        // Codifica: IV + mensaje
+        const correoFinal = CryptoJS.enc.Base64.stringify(ivCorreo.concat(correoEncrypted.ciphertext));
+        const passFinal = CryptoJS.enc.Base64.stringify(ivPass.concat(contrasenaEncrypted.ciphertext));
+
+        // Reemplaza valores reales
+        correoInput.value = correoFinal;
+        contrasenaInput.value = passFinal;
+    });
+</script>
+
 </body>
 </html>
