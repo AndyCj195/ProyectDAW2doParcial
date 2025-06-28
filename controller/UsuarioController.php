@@ -48,45 +48,46 @@ class UsuarioController
 
     public function login()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $correoEncrypted = $_POST['correo'] ?? '';
-            $contrasenaEncrypted = $_POST['contrasena'] ?? '';
+        session_start();
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $correoEncrypted = $_POST['correo'] ?? null;
+            $contrasenaEncrypted = $_POST['contrasena'] ?? null;
+
+            // Validación básica
+            if (empty($correoEncrypted) || empty($contrasenaEncrypted)) {
+                echo "Correo o contraseña no pueden estar vacíos.";
+                return;
+            }
+
+            // Desencriptar los datos (usa la misma lógica que en register)
             $correo = $this->decryptClientData($correoEncrypted);
             $contrasena = $this->decryptClientData($contrasenaEncrypted);
 
-            var_dump("Correo desencriptado", $correo);
-            var_dump("Contraseña desencriptada", $contrasena);
-
-
-            if (empty($correo) || empty($contrasena)) {
-                $_SESSION['login_error'] = "Correo o contraseña no pueden estar vacíos.";
-                header("Location: index.php?c=index&f=index&p=login");
-                exit();
+            if (!$correo || !$contrasena) {
+                echo "Error al desencriptar los datos del formulario.";
+                return;
             }
 
-            $usuario = $this->model->login($correo, $contrasena);
+            try {
+                $usuario = $this->model->login($correo, $contrasena);
 
-            if ($usuario) {
-                if ($usuario['tipoDeUsuario'] == 'Administrador') {
-                    return $this->mapToUsuario($usuario); // <-- Usa un mapeador
-                }
+                if ($usuario) {
+                    $_SESSION['usuarioId'] = $usuario['id_Usuario']; // Usa el nombre real de tu campo
+                    $_SESSION['nombreUsuario'] = $usuario['nombres'];
+                    $_SESSION['tipoDeUsuario'] = $usuario['tipoDeUsuario'];
 
-                if (password_verify($contrasena, $usuario['contrasena'])) {
-                    if (isset($usuario['cedula'])) {
-                        $usuario['cedula'] = $this->decryptClientData($usuario['cedula']);
-                    }
-                    return $this->mapToUsuario($usuario);
+                    header("Location: index.php");
+                    exit;
                 } else {
-                    return false;
+                    echo "Correo o contraseña incorrectos.";
                 }
-            } else {
-                $_SESSION['login_error'] = "Correo o contraseña incorrectos.";
-                header("Location: index.php?c=Usuario&f=index");
-                exit();
+            } catch (Exception $ex) {
+                echo "Error en el login: " . $ex->getMessage();
             }
         }
     }
+
 
     public function logout()
     {
