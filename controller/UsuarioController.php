@@ -56,8 +56,7 @@ class UsuarioController
 
             // Validación básica
             if (empty($correoEncrypted) || empty($contrasenaEncrypted)) {
-                echo "Correo o contraseña no pueden estar vacíos.";
-                return;
+                echo "<script>alert('Correo o contraseña no pueden estar vacíos.');</script>";
             }
 
             // Desencriptar los datos (usa la misma lógica que en register)
@@ -85,6 +84,7 @@ class UsuarioController
             } catch (Exception $ex) {
                 echo "Error en el login: " . $ex->getMessage();
             }
+            
         }
     }
 
@@ -103,13 +103,17 @@ class UsuarioController
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $correoEncrypted = $_POST['correo'] ?? '';
-            $cedulaEncrypted = $_POST['cedula'] ?? '';
-            $contrasenaEncrypted = $_POST['contrasena'] ?? '';
-            $contrasenaConfirmEncrypted = $_POST['contrasena_confirm'] ?? '';
+            $correoEncrypted = $_POST['correoEncrypted'] ?? '';
+            $cedulaEncrypted = $_POST['cedulaEncrypted'] ?? '';
+            $telefonoEncrypted = $_POST['telefonoEncrypted'] ?? '';
+            $direccionEncrypted = $_POST['direccionEncrypted'] ?? '';
+            $contrasenaEncrypted = $_POST['contrasenaEncrypted'] ?? '';
+            $contrasenaConfirmEncrypted = $_POST['contrasenaConfirmEncrypted'] ?? '';
 
             $correo = $this->decryptClientData($correoEncrypted);
             $cedula = $this->decryptClientData($cedulaEncrypted);
+            $telefono = $this->decryptClientData($telefonoEncrypted);
+            $direccion = $this->decryptClientData($direccionEncrypted);
             $contrasena = $this->decryptClientData($contrasenaEncrypted);
             $contrasenaConfirm = $this->decryptClientData($contrasenaConfirmEncrypted);
 
@@ -122,6 +126,8 @@ class UsuarioController
             // Ahora actualizamos POST para que populate() funcione bien
             $_POST['correo'] = $correo;
             $_POST['cedula'] = $cedula;
+            $_POST['telefono'] = $telefono;
+            $_POST['direccion'] = $direccion;
             $_POST['contrasena'] = $contrasena;
 
             $usuarioDTO = $this->populate();

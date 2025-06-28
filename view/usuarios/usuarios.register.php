@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/styleForm.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="assets/js/encrypts.js"></script>
     <title>Registro de Usuario</title>
 </head>
 
@@ -26,26 +28,30 @@
                     <div class="seccion" style="display: block;">
                         <div id="div-nombre">
                             <label for="nombres">Nombres</label><br>
-                            <input type="text" name="nombres" id="input-nombres">
+                            <input type="text" id="input-nombres">
+                            <input type="hidden" name="nombreEncrypted" id="nombreEncrypted">
                             <div class="error-message" id="error-nombre"></div>
                         </div>
                     </div>
                     <div class="seccion" style="display: block;">
                         <div class="div-correo">
                             <label for="correo">Correo</label><br>
-                            <input type="email" name="correo" id="input-correo">
+                            <input type="email" id="input-correo">
+                            <input type="hidden" name="correoEncrypted" id="correoEncrypted">
                             <div class="error-message" id="error-correo"></div>
                         </div>
                     </div>
                     <div class="seccion">
                         <div class="div-CI">
                             <label for="cedula">Cedula</label><br>
-                            <input type="text" name="cedula" id="input-cedula">
+                            <input type="text" id="input-cedula">
+                            <input type="hidden" name="cedulaEncrypted" id="cedulaEncrypted">
                             <div class="error-message" id="error-cedula"></div>
                         </div>
                         <div class="div-telefono">
                             <label for="telefono">Telefono</label><br>
-                            <input type="text" name="telefono" id="input-telefono">
+                            <input type="text" id="input-telefono">
+                            <input type="hidden" name="telefonoEncrypted" id="telefonoEncrypted">
                             <div class="error-message" id="error-telefono"></div>
                         </div>
                     </div>
@@ -70,18 +76,20 @@
                     <div class="seccion">
                         <div class="div-contrasena">
                             <label for="contrasena">Contraseña:</label><br>
-                            <input type="password" id="contrasena" name="contrasena">
+                            <input type="password" id="contrasena">
+                            <input type="hidden" name="contrasena" id="contrasenaEncrypted">
                             <div class="error-message" id="error-contrasena"></div>
                         </div>
                         <div class="div-contra2">
                             <label for="idContrasena2">Confirmar Contraseña:</label><br>
-                            <input type="password" id="idContrasena2" name="contrasena_confirm">
+                            <input type="password" id="idContrasena2">
+                            <input type="hidden" name="contrasena_confirm" id="contrasenaConfirmEncrypted">
                             <div class="error-message" id="error-contrasena2"></div>
                         </div>
                     </div>
                     <div class="seccion" style="display: block;">
                         <div class="div-botones">
-                            <button type="submit" id="btn-registrar">Registrar</button>
+                            <button type="submit" id="btn-registrar" onclick="encryptDatosRegister()">Registrar</button>
                             <button type="button"
                                 onclick="window.location.href='index.php?c=index&f=index&p=login'">Cancelar</button>
                         </div>
@@ -91,29 +99,6 @@
 
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script>
-document.getElementById('form-register').addEventListener('submit', function(e) {
-    const key = CryptoJS.enc.Utf8.parse("13112003101020021311200310102002");
-
-    const encryptField = (id) => {
-        const input = document.getElementById(id);
-        const iv = CryptoJS.lib.WordArray.random(16);
-        const encrypted = CryptoJS.AES.encrypt(input.value, key, {
-            iv: iv,
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7
-        });
-        input.value = CryptoJS.enc.Base64.stringify(iv.concat(encrypted.ciphertext));
-    };
-
-    encryptField("input-correo");
-    encryptField("input-cedula");
-    encryptField("contrasena");
-    encryptField("idContrasena2");
-});
-</script>
-
 </body>
 
 </html>
