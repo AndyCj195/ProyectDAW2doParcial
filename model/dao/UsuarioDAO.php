@@ -84,8 +84,9 @@ class UsuarioDAO{
             return null;
         }
     }
-    public function insertUser($usuario, $contrasena){
-        try{
+    public function insertUser($usuario, $contrasena)
+    {
+        try {
             $query = "INSERT INTO Usuario (nombres, correo, cedula, telefono, direccion, tipoDeUsuario, estado, contrasena) 
                     VALUES (:nombres, :correo, :cedula, :telefono, :direccion, :tipoDeUsuario, :estado, :contrasena)";
             $stmt = $this->conexion->prepare($query);
@@ -94,10 +95,9 @@ class UsuarioDAO{
             $nombres = $usuario->getNombres();
             $correo = $usuario->getCorreo();
 
-            // Verificar si la cédula ya existe
+            // Cifrar la cédula antes de insertarla
             $cedulaOriginal = $usuario->getCedula();
             $cedulaCifrada = $this->encryptData($cedulaOriginal);
-
 
             $telefono = $this->encryptData($usuario->getTelefono());
             $direccion = $this->encryptData($usuario->getDireccion());
@@ -117,12 +117,15 @@ class UsuarioDAO{
             $stmt->bindParam(':contrasena', $hashedPassword, PDO::PARAM_STR);
 
             $res = $stmt->execute();
+
+
             return $res;
-        }catch(PDOException $ex){
-            echo 'Error al insertar usuario: '.$ex->getMessage();
+        } catch (PDOException $ex) {
+            echo 'Error al insertar usuario: ' . $ex->getMessage();
             return false;
         }
     }
+
 
     public function updateUser($usuario){
         try {

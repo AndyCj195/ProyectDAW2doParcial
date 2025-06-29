@@ -3,34 +3,39 @@
 
 require_once 'model/dto/Usuario.php';
 require_once 'model/dao/UsuarioDAO.php';
-class UsuarioController{
+class UsuarioController
+{
     private $model;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->model = new UsuarioDAO();
     }
 
-    public function index(){
+    public function index()
+    {
         $titulo = "Nuevo Usuario";
-        require_once VUSUARIO.'register.php';
+        require_once VUSUARIO . 'register.php';
     }
 
-    public function view_edit(){
+    public function view_edit()
+    {
         $id = htmlentities($_GET['id']);
         $usuario = $this->model->selectById($id);
-        if($usuario == null){
+        if ($usuario == null) {
             $_SESSION['error'] = "Usuario no encontrado";
             header('Location: index.php?c=Usuario&f=listUser');
         }
 
         $titulo = "Editar Usuario";
-        require_once VUSUARIO.'edit.php';
+        require_once VUSUARIO . 'edit.php';
     }
 
-    public function view_dump(){
+    public function view_dump()
+    {
         $usuarios = $this->model->selectAll('Inactivo');
         $titulo = "Listado de Usuarios Inactivos";
-        require_once VUSUARIO.'basurero.php';
+        require_once VUSUARIO . 'basurero.php';
     }
 
     public function login()
@@ -71,12 +76,14 @@ class UsuarioController{
             } catch (Exception $ex) {
                 echo "Error en el login: " . $ex->getMessage();
             }
-            
+
         }
     }
 
 
-    public function logout() {
+
+    public function logout()
+    {
         session_start();
         // Elimina las variables de sesión
         session_unset();
@@ -89,12 +96,12 @@ class UsuarioController{
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $correoEncrypted = $_POST['correo'] ?? '';
-            $cedulaEncrypted = $_POST['cedula'] ?? '';
-            $telefonoEncrypted = $_POST['telefono'] ?? '';
-            $direccionEncrypted = $_POST['direccion'] ?? '';
-            $contrasenaEncrypted = $_POST['contrasena'] ?? '';
-            $contrasenaConfirmEncrypted = $_POST['idContrasena2'] ?? '';
+            $correoEncrypted = $_POST['correoEncrypted'] ?? '';
+            $cedulaEncrypted = $_POST['cedulaEncrypted'] ?? '';
+            $telefonoEncrypted = $_POST['telefonoEncrypted'] ?? '';
+            $direccionEncrypted = $_POST['direccionEncrypted'] ?? '';
+            $contrasenaEncrypted = $_POST['contrasenaEncrypted'] ?? '';
+            $contrasenaConfirmEncrypted = $_POST['contrasenaConfirmEncrypted'] ?? '';
 
             $correo = $this->decryptClientData($correoEncrypted);
             $cedula = $this->decryptClientData($cedulaEncrypted);
@@ -129,61 +136,68 @@ class UsuarioController{
     }
 
 
-    public function delete(){
+
+    public function delete()
+    {
         $id = htmlentities($_REQUEST['id'] ?? "");
-        if($this->model->deleteUser($id)){
+        if ($this->model->deleteUser($id)) {
             echo "Usuario Dado de baja.";
             header('Location: index.php?c=Usuario&f=listUser');
-        }else{
+        } else {
             echo "Error al eliminar el usuario.";
         }
     }
 
-    public function logicalDeleteUser(){
+    public function logicalDeleteUser()
+    {
         $id = htmlentities($_REQUEST['id'] ?? "");
         $estado = "Inactivo";
-        if($this->model->UpdateEstado($id, $estado)){
+        if ($this->model->UpdateEstado($id, $estado)) {
             echo "Usuario Dado de baja.";
             header('Location: index.php?c=Usuario&f=view_dump');
-        }else{
+        } else {
             echo "Error al eliminar el usuario.";
         }
     }
 
-    public function restoreUser(){
+    public function restoreUser()
+    {
         $id = htmlentities($_REQUEST['id'] ?? "");
         $estado = "Activo";
-        if($this->model->UpdateEstado($id, $estado)){
+        if ($this->model->UpdateEstado($id, $estado)) {
             echo "Usuario Restaurado.";
             header('Location: index.php?c=Usuario&f=view_dump');
-        }else{
+        } else {
             echo "Error al restaurar el usuario.";
         }
     }
-    public function listUser(){
+    public function listUser()
+    {
         $usuarios = $this->model->selectAll("Activo");
         $titulo = "Listado de Usuarios";
-        require_once VUSUARIO.'list.php';
+        require_once VUSUARIO . 'list.php';
     }
 
 
-    
-    public function edit(){
-        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+
+    public function edit()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $_SESSION['error'] = "Acceso no permitido";
             header('Location: index.php?c=Usuario&f=listUser');
         }
         $user = $this->populate();
         $exito = $this->model->updateUser($user);
-        if($exito){
+        if ($exito) {
             $_SESSION['exito'] = "Usuario actualizado con éxito";
             header('Location: index.php?c=Usuario&f=listUser');
         }
     }
 
-    
 
-    public function populate(){
+
+    public function populate()
+    {
         $user = new Usuario();
         $user->setId($_POST['id']);
         $user->setNombres($_POST['nombres']);
@@ -191,12 +205,12 @@ class UsuarioController{
         $user->setCedula($_POST['cedula']);
         $user->setTelefono($_POST['telefono']);
         $user->setDireccion($_POST['direccion']);
-        $user->setTipoDeUsuario($_POST['tipoDeUsuario']?? 'Usuario');
+        $user->setTipoDeUsuario($_POST['tipoDeUsuario'] ?? 'Usuario');
         $user->setEstado("Activo");
-        
-        if(isset($_POST['contrasena'])&& !empty($_POST['contrasena'])){
+
+        if (isset($_POST['contrasena']) && !empty($_POST['contrasena'])) {
             $user->setContrasena($_POST['contrasena']);
-        }else{
+        } else {
             echo "Contraseña no puede ser vacía";
         }
 
