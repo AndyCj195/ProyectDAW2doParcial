@@ -4,7 +4,7 @@
     <h1 style="color: #2a4d2a; text-align: center; margin-bottom: 20px;">Listado de Rutas de Recolección</h1>
     <?php if ($tipoDeUsuario === 'Administrador'): ?>
         <div style="text-align: right; margin-bottom: 20px;">
-            <a href="index.php?c=Rutas&f=createForm" class="btn" style="text-decoration: none; background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px;">Nueva Ruta</a>
+            <a href="index.php?c=Rutas&f=view_edit" class="btn" style="text-decoration: none; background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px;">Nueva Ruta</a>
         </div>
     <?php endif; ?>
     <table border="1" style="width: 100%; border-collapse: collapse; background-color: #ffffff; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
@@ -35,7 +35,7 @@
                         <td style="padding: 10px;"><?php echo $ruta->getVehiculoAsignado(); ?></td>
                         <?php if ($tipoDeUsuario === 'Administrador' || $tipoDeUsuario === 'Empresa'): ?>
                             <td style="padding: 10px; text-align: center;"> 
-                                <a href="index.php?c=Rutas&f=editForm&id=<?php echo $ruta->getId(); ?>" style="color: #007bff; text-decoration: none;">Editar</a>
+                                <a href="index.php?c=Rutas&f=view_edit&id=<?php echo $ruta->getId(); ?>" style="color: #007bff; text-decoration: none;">Editar</a>
                                 &nbsp;|&nbsp;
                                 <a href="index.php?c=Rutas&f=delete&id=<?php echo $ruta->getId(); ?>" style="color: #e53935; text-decoration: none;" onclick="return confirm('¿Estás seguro de eliminar esta ruta?')">Eliminar
 </a>

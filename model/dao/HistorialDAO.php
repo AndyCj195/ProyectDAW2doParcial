@@ -23,6 +23,7 @@ class HistorialDAO {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($data);
     }
+    
 
     public function getAllRegistros() {
         $sql = "SELECT * FROM historialregistros";

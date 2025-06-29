@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link  href="assets/css/styleForm.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="assets/js/encrypts.js"></script>
+
     <title>Inicio de Sesión</title>
 </head>
 <body>
@@ -24,20 +27,22 @@
                     <div class="seccion" style="display: block;">
                         <div id="div-correo">
                         <label for="correo">Correo:</label><br>
-                        <input type="email" name="correo" id="correo">
+                        <input type="email" id="correoInput" placeholder="Ingrese su correo electrónico">
+                        <input type="hidden" name="correo" id="correoEncrypted">
                             <div class="error-message" id="error-correo"></div>
                         </div>
                     </div>
                     <div class="seccion" style="display: block;">
                         <div class="div-contrasena">
                         <label for="contrasena">Contraseña:</label><br>
-                        <input type="password" name="contrasena" id="contrasena">
+                        <input type="password" id="contrasenaInput" placeholder="Ingrese su contraseña">
+                        <input type="hidden" name="contrasena" id="contrasenaEncrypted">
                             <div class="error-message" id="error-contrasena"></div>
                         </div>
                     </div>
                     <div class="seccion" style="display: block;">
                         <div class="div-botones">
-                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                            <button type="submit" class="btn btn-primary" onclick="encryptDatosLogin()">Iniciar Sesión</button>
                         </div>
                     </div>
                     <div class="seccion" style="display: block;">

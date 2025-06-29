@@ -11,36 +11,36 @@ class RutasController {
     }
 
     public function index() {
+        $titulo = "Listado de Rutas de Recolección";
         try {
             $rutas = $this->rutaDAO->readAll();
-            require_once VRUTAS .'Verlista.php'; // Vista que lista todas las rutas
+            require_once VRUTAS . 'Verlista.php'; // Vista que lista todas las rutas
         } catch (Exception $e) {
-            echo "Error al cargar las rutas: " . $e->getMessage();
-        } 
+            $_SESSION['error'] = "Error al cargar las rutas: " . $e->getMessage();
+            header("Location: index.php");
+        }
     }
 
-    public function createForm() {
-        $titulo = "Crear rutas";
-        require_once 'view/RutasRecoleccion/RutasR.CrearLista.php'; // Vista del formulario para crear rutas
+    public function view_create() {
+        $titulo = "Crear Ruta de Recolección";
+        require_once VRUTAS . 'CrearLista.php'; // Vista del formulario para crear rutas
     }
 
 
-    public function create(): void {
+    public function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $fecha = $_POST['FechaDeRecoleccion'];
-            $hora = $_POST['HoraDeRecoleccion'];
-            $materiales = $_POST['materialesARecoger'];
-            $empresa = $_POST['EmpresaEncargada'];
-            $sector = $_POST['SectorCubierto'];
-            $vehiculo = $_POST['VehiculoAsignado'];
-    
-            $rutaDTO = new RutasRecoleccionDTO(null, $fecha, $hora, $materiales, $empresa, $sector, $vehiculo);
-    
-            if ($this->rutaDAO->create($rutaDTO)) {
-                header("Location: index.php?c=Rutas&f=index");
-                exit;
-            } else {
-                echo "Error al crear la ruta.";
+            try {
+                $rutaDTO = $this->populate();
+                if ($this->rutaDAO->create($rutaDTO)) {
+                    $_SESSION['exito'] = "Ruta creada con éxito.";
+                    header("Location: index.php?c=Rutas&f=index");
+                } else {
+                    $_SESSION['error'] = "Error al crear la ruta.";
+                    header("Location: index.php?c=Rutas&f=view_create");
+                }
+            } catch (Exception $e) {
+                $_SESSION['error'] = "Error al procesar la solicitud: " . $e->getMessage();
+                header("Location: index.php?c=Rutas&f=view_create");
             }
         }
     }
@@ -48,21 +48,21 @@ class RutasController {
     
 
 
-    public function editForm() {
-        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
-    
+    public function view_edit() {
+        $id = htmlentities($_GET['id'] ?? null);
         if (!$id) {
-            die("ID no válido.");
+            $_SESSION['error'] = "ID no válido.";
+            header("Location: index.php?c=Rutas&f=index");
         }
-    
+
         $ruta = $this->rutaDAO->readById($id);
-    
         if (!$ruta) {
-            die("Ruta no encontrada.");
+            $_SESSION['error'] = "Ruta no encontrada.";
+            header("Location: index.php?c=Rutas&f=index");
         }
-    
-        // Ajusta la ruta al archivo correcto
-        require_once __DIR__ . "/../view/RutasRecoleccion/RutasR.EditarLista.php";
+
+        $titulo = "Editar Ruta de Recolección";
+        require_once VRUTAS . 'EditarLista.php'; // Vista del formulario para editar rutas
     }
     
     
@@ -70,48 +70,57 @@ class RutasController {
 
     public function edit() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = filter_var($_POST['id_RutasRecoleccion'], FILTER_VALIDATE_INT);
-            $fecha = $_POST['FechaDeRecoleccion'];
-            $hora = $_POST['HoraDeRecoleccion'];
-            $materiales = $_POST['materialesARecoger'];
-            $empresa = $_POST['EmpresaEncargada'];
-            $sector = $_POST['SectorCubierto'];
-            $vehiculo = $_POST['VehiculoAsignado'];
-    
-            // Validación básica
-            if (!$id || !$fecha || !$hora || !$materiales || !$empresa || !$sector) {
-                echo "Todos los campos obligatorios deben ser llenados.";
-                return;
-            }
-    
-            // Crear DTO con los datos
-            $rutaDTO = new RutasRecoleccionDTO($id, $fecha, $hora, $materiales, $empresa, $sector, $vehiculo);
-    
-            // Actualizar en la base de datos
-            if ($this->rutaDAO->update($rutaDTO)) {
-                header("Location: index.php?c=Rutas&f=index");
-                exit;
-            } else {
-                echo "Error al actualizar la ruta.";
+            try {
+                $rutaDTO = $this->populate();
+                if ($this->rutaDAO->update($rutaDTO)) {
+                    $_SESSION['exito'] = "Ruta actualizada con éxito.";
+                    header("Location: index.php?c=Rutas&f=index");
+                } else {
+                    $_SESSION['error'] = "Error al actualizar la ruta.";
+                    header("Location: index.php?c=Rutas&f=view_edit&id=" . $rutaDTO->getId());
+                }
+            } catch (Exception $e) {
+                $_SESSION['error'] = "Error al procesar la solicitud: " . $e->getMessage();
+                header("Location: index.php?c=Rutas&f=view_edit&id=" . htmlentities($_POST['id_RutasRecoleccion']));
             }
         }
     }
-    
 
- 
-    public function delete($id) {
-        // Validación básica del ID
-        if (!$id || !is_numeric($id)) {
-            echo "ID no válido para eliminar.";
-            return;
-        }
-
-        if ($this->rutaDAO->delete($id)) {
+    public function delete() {
+        $id = htmlentities($_GET['id'] ?? null);
+        if (!$id) {
+            $_SESSION['error'] = "ID no válido.";
             header("Location: index.php?c=Rutas&f=index");
-            exit;
-        } else {
-            echo "Error al eliminar la ruta.";
         }
+
+        try {
+            if ($this->rutaDAO->delete($id)) {
+                $_SESSION['exito'] = "Ruta eliminada con éxito.";
+                header("Location: index.php?c=Rutas&f=index");
+            } else {
+                $_SESSION['error'] = "Error al eliminar la ruta.";
+                header("Location: index.php?c=Rutas&f=index");
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Error al procesar la solicitud: " . $e->getMessage();
+            header("Location: index.php?c=Rutas&f=index");
+        }
+    }
+
+    private function populate() {
+        $id = filter_var($_POST['id_RutasRecoleccion'] ?? null, FILTER_VALIDATE_INT);
+        $fecha = $_POST['FechaDeRecoleccion'] ?? null;
+        $hora = $_POST['HoraDeRecoleccion'] ?? null;
+        $materiales = $_POST['materialesARecoger'] ?? null;
+        $empresa = $_POST['EmpresaEncargada'] ?? null;
+        $sector = $_POST['SectorCubierto'] ?? null;
+        $vehiculo = $_POST['VehiculoAsignado'] ?? null;
+
+        if (!$fecha || !$hora || !$materiales || !$empresa || !$sector || !$vehiculo) {
+            throw new Exception("Todos los campos son obligatorios.");
+        }
+
+        return new RutasRecoleccionDTO($id, $fecha, $hora, $materiales, $empresa, $sector, $vehiculo);
     }
 }
 ?>

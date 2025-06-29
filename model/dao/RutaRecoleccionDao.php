@@ -10,7 +10,7 @@ class RutasRecoleccionDAO {
         $this->conexion = Conexion::getConnection();
     }
 
-    public function create(RutasRecoleccionDTO $ruta) {
+    public function create($ruta) {
         try {
             $query = "INSERT INTO RutasRecoleccion (FechaDeRecoleccion, HoraDeRecoleccion, materialesARecoger, EmpresaEncargada, SectorCubierto, VehiculoAsignado)
                       VALUES (:FechaDeRecoleccion, :HoraDeRecoleccion, :materialesARecoger, :EmpresaEncargada, :SectorCubierto, :VehiculoAsignado)";
@@ -100,13 +100,21 @@ class RutasRecoleccionDAO {
                           VehiculoAsignado = :VehiculoAsignado
                       WHERE id_RutasRecoleccion = :id";
             $stmt = $this->conexion->prepare($query);
-            $stmt->bindParam(':id', $ruta->getId(), PDO::PARAM_INT);
-            $stmt->bindParam(':FechaDeRecoleccion', $ruta->getFechaDeRecoleccion(), PDO::PARAM_STR);
-            $stmt->bindParam(':HoraDeRecoleccion', $ruta->getHoraDeRecoleccion(), PDO::PARAM_STR);
-            $stmt->bindParam(':materialesARecoger', $ruta->getMaterialesARecoger(), PDO::PARAM_STR);
-            $stmt->bindParam(':EmpresaEncargada', $ruta->getEmpresaEncargada(), PDO::PARAM_STR);
-            $stmt->bindParam(':SectorCubierto', $ruta->getSectorCubierto(), PDO::PARAM_STR);
-            $stmt->bindParam(':VehiculoAsignado', $ruta->getVehiculoAsignado(), PDO::PARAM_STR);
+            $id = $ruta->getId();
+            $fechaDeRecoleccion = $ruta->getFechaDeRecoleccion();
+            $horaDeRecoleccion = $ruta->getHoraDeRecoleccion();
+            $materialesARecoger = $ruta->getMaterialesARecoger();
+            $empresaEncargada = $ruta->getEmpresaEncargada();
+            $sectorCubierto = $ruta->getSectorCubierto();
+            $vehiculoAsignado = $ruta->getVehiculoAsignado();
+
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':FechaDeRecoleccion', $fechaDeRecoleccion, PDO::PARAM_STR);
+            $stmt->bindParam(':HoraDeRecoleccion', $horaDeRecoleccion, PDO::PARAM_STR);
+            $stmt->bindParam(':materialesARecoger', $materialesARecoger, PDO::PARAM_STR);
+            $stmt->bindParam(':EmpresaEncargada', $empresaEncargada, PDO::PARAM_STR);
+            $stmt->bindParam(':SectorCubierto', $sectorCubierto, PDO::PARAM_STR);
+            $stmt->bindParam(':VehiculoAsignado', $vehiculoAsignado, PDO::PARAM_STR);
             return $stmt->execute();
         } catch (PDOException $ex) {
             error_log("Error al actualizar ruta de recolección: " . $ex->getMessage());

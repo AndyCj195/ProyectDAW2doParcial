@@ -1,6 +1,7 @@
 <?php
 
 //configuracion del cifrado
+//confifuracion para la encriptacion de datos
 define("KEY", "13112003101020021311200310102002");
 define("METHOD","AES-256-CBC");
 
