@@ -32,37 +32,41 @@ class UsuarioController{
         require_once VUSUARIO.'basurero.php';
     }
 
-    public function login() {
+    public function login()
+    {
         session_start();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $correo = $_POST['correo'] ?? null;
-        $contrasena = $_POST['contrasena'] ?? null;
+            // Desencriptar datos que vienen del cliente
+            $correoEncrypted = $_POST['correo'] ?? null;
+            $contrasenaEncrypted = $_POST['contrasena'] ?? null;
 
-        if (empty($correo) || empty($contrasena)) {
-            echo "Correo o contraseña no pueden estar vacíos.";
-            return;
-        }
+            $correo = $this->decryptClientData($correoEncrypted);
+            $contrasena = $this->decryptClientData($contrasenaEncrypted);
 
-        try {
-            // Verifica si el usuario existe
-            $usuario = $this->model->login($correo, $contrasena);
-
-            if ($usuario) {
-                // Configura la sesión con los datos del usuario
-                $_SESSION['usuarioId'] = $usuario['id'];
-                $_SESSION['nombreUsuario'] = $usuario['nombres'];
-                $_SESSION['tipoDeUsuario'] = $usuario['tipoDeUsuario'];
-                
-                echo "Inicio de sesión exitoso. Bienvenido, " . $_SESSION['nombreUsuario'];
-                header("Location: index.php"); // Redirige al inicio
-                exit;
-            } else {
-                echo "Correo o contraseña incorrectos.";
+            if (empty($correo) || empty($contrasena)) {
+                echo "Correo o contraseña no pueden estar vacíos.";
+                return;
             }
-        } catch (Exception $ex) {
-            echo "Error en el login: " . $ex->getMessage();
-        }
+
+            try {
+                // Verifica si el usuario existe
+                $usuario = $this->model->login($correo, $contrasena);
+
+                if ($usuario) {
+                    $_SESSION['usuarioId'] = $usuario['id'];
+                    $_SESSION['nombreUsuario'] = $usuario['nombres'];
+                    $_SESSION['tipoDeUsuario'] = $usuario['tipoDeUsuario'];
+
+                    echo "Inicio de sesión exitoso. Bienvenido, " . $_SESSION['nombreUsuario'];
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    echo "Correo o contraseña incorrectos.";
+                }
+            } catch (Exception $ex) {
+                echo "Error en el login: " . $ex->getMessage();
+            }
         }
     }
 
@@ -162,6 +166,14 @@ class UsuarioController{
 
         return $user;
 
+    }
+
+    private function decryptClientData($data) {
+        $data = base64_decode($data);
+        $ivlen = openssl_cipher_iv_length(METHOD);
+        $iv = substr($data, 0, $ivlen);
+        $encrypted = substr($data, $ivlen);
+        return openssl_decrypt($encrypted, METHOD, KEY, OPENSSL_RAW_DATA, $iv);
     }
 }
 ?>
