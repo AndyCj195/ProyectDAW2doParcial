@@ -41,9 +41,10 @@ class UsuarioDAO{
                 $usuario->setId($resultado['id_Usuario']);
                 $usuario->setNombres($resultado['nombres']);
                 $usuario->setCorreo($resultado['correo']);
-                $usuario->setCedula($resultado['cedula']);
-                $usuario->setTelefono($resultado['telefono']);
-                $usuario->setDireccion($resultado['direccion']);
+                // Desencriptar los datos antes de asignarlos
+                $usuario->setCedula($this->decryptData($resultado['cedula']));
+                $usuario->setTelefono($this->decryptData($resultado['telefono']));
+                $usuario->setDireccion($this->decryptData($resultado['direccion']));
                 $usuario->setTipoDeUsuario($resultado['tipoDeUsuario']);
                 $usuario->setEstado($resultado['Estado']);
                 $usuarios[] = $usuario;
@@ -54,6 +55,7 @@ class UsuarioDAO{
             return [];
         }
     }
+    
 
     public function selectById($id){
         try{
@@ -78,9 +80,9 @@ class UsuarioDAO{
             // Asignar variables intermedias
             $nombres = $usuario->getNombres();
             $correo = $usuario->getCorreo();
-            $cedula = $usuario->getCedula();
-            $telefono = $usuario->getTelefono();
-            $direccion = $usuario->getDireccion();
+            $cedula = $this->encryptData($usuario->getCedula());
+            $telefono = $this->encryptData($usuario->getTelefono());
+            $direccion = $this->encryptData($usuario->getDireccion());
             $tipoDeUsuario = $usuario->getTipoDeUsuario();
             $estado = $usuario->getEstado();
             $hashedPassword = password_hash($contrasena, PASSWORD_BCRYPT);
@@ -154,6 +156,31 @@ class UsuarioDAO{
         }
     }
 
+
+    function encryptData($data)
+    {
+        $ivlen = openssl_cipher_iv_length(METHOD);
+        $iv = openssl_random_pseudo_bytes($ivlen);
+
+        $encrypted = openssl_encrypt($data, METHOD, KEY, OPENSSL_RAW_DATA, $iv);
+
+        return base64_encode($iv . $encrypted);
+    }
+
+    //metodo para desencriptar
+    function decryptData($data)
+    {
+        $data = base64_decode($data);
+
+        $ivlen = openssl_cipher_iv_length(METHOD);
+        if (strlen($data) < $ivlen) {
+            return false; // Datos inválidos
+        }
+        $iv = substr($data, 0, $ivlen);
+        $descrypt = substr($data, $ivlen);
+
+        return openssl_decrypt($descrypt, METHOD, KEY, OPENSSL_RAW_DATA, $iv);
+    }
 }
 
 ?>
