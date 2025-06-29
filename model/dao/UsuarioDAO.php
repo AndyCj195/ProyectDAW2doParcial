@@ -88,10 +88,7 @@ class UsuarioDAO
             $nombres = $usuario->getNombres();
             $correo = $usuario->getCorreo();
 
-            // Cifrar la cédula antes de insertarla
-            $cedulaOriginal = $usuario->getCedula();
-            $cedulaCifrada = $this->encryptData($cedulaOriginal);
-
+            $cedula = $this->encryptData($usuario->getCedula());
             $telefono = $this->encryptData($usuario->getTelefono());
             $direccion = $this->encryptData($usuario->getDireccion());
             $tipoDeUsuario = $usuario->getTipoDeUsuario();
@@ -100,7 +97,7 @@ class UsuarioDAO
 
             $stmt->bindParam(':nombres', $nombres, PDO::PARAM_STR);
             $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
-            $stmt->bindParam(':cedula', $cedulaCifrada, PDO::PARAM_STR);
+            $stmt->bindParam(':cedula', $cedula, PDO::PARAM_STR);
             $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
             $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
             $stmt->bindParam(':tipoDeUsuario', $tipoDeUsuario, PDO::PARAM_STR);
