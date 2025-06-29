@@ -10,24 +10,16 @@ class UsuarioDAO{
 
     public function login($correo, $contrasena){
         try {
-            $query = "SELECT * FROM usuario WHERE correo = :correo and contrasena = :contrasena";
+            $query = "SELECT * FROM usuario WHERE correo = :correo";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
-            $stmt->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
             $stmt->execute();
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            if ($usuario) {
-                // Comparación de contraseñas sin encriptar (temporal para pruebas)
-                // Comentado para futuros ajustes con password_verify
-                // if (password_verify($contrasena, $usuario['contrasena'])) {
-                if ($usuario['contrasena'] === $contrasena) { // Comparación directa
-                    return $usuario; // Usuario y contraseña correctos
-                } else {
-                    return false; // Contraseña incorrecta
-                }
+
+            if ($usuario && password_verify($contrasena, $usuario['contrasena'])) {
+                return $usuario; // Usuario y contraseña correctos
             }
-            return false; // Usuario no encontrado
+            return false; // Usuario no encontrado o contraseña incorrecta
         } catch (PDOException $ex) {
             echo 'Error al loguear usuario: ' . $ex->getMessage();
             return false;
@@ -91,8 +83,7 @@ class UsuarioDAO{
             $direccion = $usuario->getDireccion();
             $tipoDeUsuario = $usuario->getTipoDeUsuario();
             $estado = $usuario->getEstado();
-            $hashedPassword = $contrasena;
-            //$hashedPassword = password_hash($contrasena, PASSWORD_BCRYPT);
+            $hashedPassword = password_hash($contrasena, PASSWORD_BCRYPT);
 
             $stmt->bindParam(':nombres', $nombres, PDO::PARAM_STR);
             $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
