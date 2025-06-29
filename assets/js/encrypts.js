@@ -26,43 +26,19 @@ function encryptDatosLogin() {
 }
 
 
-function encryptDatosRegister(){
+function encryptDatosRegister(e) {
+    e.preventDefault();
+
     const form = document.getElementById('form-register');
-    const nombreInput = document.getElementById('input-nombres');
-    const correoInput = document.getElementById('input-correo');
-    const cedulaInput = document.getElementById('input-cedula');
-    const telefonoInput = document.getElementById('input-telefono');
-    const contrasenaInput = document.getElementById('contrasena');
-    const contrasenaConfirmInput = document.getElementById('idContrasena2');
+    document.getElementById('nombreEncrypted').value = encryptAES(document.getElementById('input-nombres').value);
+    document.getElementById('correoEncrypted').value = encryptAES(document.getElementById('input-correo').value);
+    document.getElementById('cedulaEncrypted').value = encryptAES(document.getElementById('input-cedula').value);
+    document.getElementById('telefonoEncrypted').value = encryptAES(document.getElementById('input-telefono').value);
+    document.getElementById('direccionEncrypted').value = encryptAES(document.getElementById('input-direccion').value);
+    document.getElementById('contrasenaEncrypted').value = encryptAES(document.getElementById('contrasena').value);
+    document.getElementById('contrasenaConfirmEncrypted').value = encryptAES(document.getElementById('idContrasena2').value);
 
-    // Campos ocultos para almacenar los datos encriptados
-    const nombreHidden = document.getElementById('nombreEncrypted');
-    const correoHidden = document.getElementById('correoEncrypted');
-    const cedulaHidden = document.getElementById('cedulaEncrypted');
-    const telefonoHidden = document.getElementById('telefonoEncrypted');
-    const contrasenaHidden = document.getElementById('contrasenaEncrypted');
-    const contrasenaConfirmHidden = document.getElementById('contrasenaConfirmEncrypted');
-
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const nombreEncrypted = encryptAES(nombreInput.value);
-        const correoEncrypted = encryptAES(correoInput.value);
-        const cedulaEncrypted = encryptAES(cedulaInput.value);
-        const telefonoEncrypted = encryptAES(telefonoInput.value);
-        const contrasenaEncrypted = encryptAES(contrasenaInput.value);
-        const contrasenaConfirmEncrypted = encryptAES(contrasenaConfirmInput.value);
-
-        // Asignar los valores encriptados a los campos ocultos
-        nombreHidden.value = nombreEncrypted;
-        correoHidden.value = correoEncrypted;
-        cedulaHidden.value = cedulaEncrypted;
-        telefonoHidden.value = telefonoEncrypted;
-        contrasenaHidden.value = contrasenaEncrypted;
-        contrasenaConfirmHidden.value = contrasenaConfirmEncrypted;
-
-        form.submit();
-    });
+    form.submit();
 }
 
 
