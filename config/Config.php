@@ -1,4 +1,9 @@
 <?php
+
+//configuracion del cifrado
+define("KEY", "13112003101020021311200310102002");
+define("METHOD","AES-256-CBC");
+
 //rutas de controladores y funciones
 define("CONTROLADOR_DEFECTO", "index");
 define("ACCION_DEFECTO", "index");

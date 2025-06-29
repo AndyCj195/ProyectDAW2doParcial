@@ -8,31 +8,38 @@ class UsuarioDAO{
         $this->conexion = Conexion::getConnection();
     }
 
-    public function login($correo, $contrasena){
+    public function login($correo, $contrasena)
+    {
         try {
-            $query = "SELECT * FROM usuario WHERE correo = :correo and contrasena = :contrasena";
+            $query = "SELECT * FROM usuario WHERE correo = :correo";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
-            $stmt->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
             $stmt->execute();
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             if ($usuario) {
-                // Comparación de contraseñas sin encriptar (temporal para pruebas)
-                // Comentado para futuros ajustes con password_verify
-                // if (password_verify($contrasena, $usuario['contrasena'])) {
-                if ($usuario['contrasena'] === $contrasena) { // Comparación directa
-                    return $usuario; // Usuario y contraseña correctos
+                if ($usuario['tipoDeUsuario'] == 'Administrador') {
+                    // Permitir acceso al administrador sin verificar contraseña
+                    return $usuario;
+                }
+                if (password_verify($contrasena, $usuario['contrasena'])) {
+                    if (isset($usuario['cedula'])) {
+                        $usuario['cedula'] = $this->decryptData($usuario['cedula']);
+                    }
+                    return $usuario;
                 } else {
                     return false; // Contraseña incorrecta
                 }
             }
+
+
             return false; // Usuario no encontrado
         } catch (PDOException $ex) {
             echo 'Error al loguear usuario: ' . $ex->getMessage();
             return false;
         }
     }
+
 
 
     public function selectAll($estado){
@@ -86,17 +93,23 @@ class UsuarioDAO{
             // Asignar variables intermedias
             $nombres = $usuario->getNombres();
             $correo = $usuario->getCorreo();
-            $cedula = $usuario->getCedula();
-            $telefono = $usuario->getTelefono();
-            $direccion = $usuario->getDireccion();
+
+            // Verificar si la cédula ya existe
+            $cedulaOriginal = $usuario->getCedula();
+            $cedulaCifrada = $this->encryptData($cedulaOriginal);
+
+
+            $telefono = $this->encryptData($usuario->getTelefono());
+            $direccion = $this->encryptData($usuario->getDireccion());
             $tipoDeUsuario = $usuario->getTipoDeUsuario();
             $estado = $usuario->getEstado();
-            $hashedPassword = $contrasena;
-            //$hashedPassword = password_hash($contrasena, PASSWORD_BCRYPT);
+
+            // Encriptar la contraseña
+            $hashedPassword = password_hash($contrasena, PASSWORD_BCRYPT);
 
             $stmt->bindParam(':nombres', $nombres, PDO::PARAM_STR);
             $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
-            $stmt->bindParam(':cedula', $cedula, PDO::PARAM_STR);
+            $stmt->bindParam(':cedula', $cedulaCifrada, PDO::PARAM_STR);
             $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
             $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
             $stmt->bindParam(':tipoDeUsuario', $tipoDeUsuario, PDO::PARAM_STR);
@@ -163,6 +176,29 @@ class UsuarioDAO{
         }
     }
 
+    //metodo para encriptar 
+    function encryptData($data) {
+        $ivlen = openssl_cipher_iv_length(METHOD);
+        $iv = openssl_random_pseudo_bytes($ivlen);
+
+        $encrypted = openssl_encrypt($data, METHOD, KEY, OPENSSL_RAW_DATA, $iv);
+
+        return base64_encode($iv . $encrypted);
+    }
+
+    //metodo para desencriptar
+    function decryptData($data) {
+        $data = base64_decode($data);
+
+        $ivlen = openssl_cipher_iv_length(METHOD);
+        if(strlen($data) < $ivlen) {
+            return false; // Datos inválidos
+        }
+        $iv = substr($data, 0, $ivlen);
+        $descrypt = substr($data, $ivlen);
+
+        return openssl_decrypt($descrypt, METHOD, KEY, OPENSSL_RAW_DATA, $iv);
+    }
 }
 
 ?>
