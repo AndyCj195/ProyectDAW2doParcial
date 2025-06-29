@@ -1,48 +1,52 @@
-<!--Author: Andres Chavez Jimenez-->   
+<!--Author: Andres Chavez Jimenez-->
 <?php
 require_once 'config/Conexion.php';
-class UsuarioDAO{
+class UsuarioDAO
+{
     private $conexion;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->conexion = Conexion::getConnection();
     }
 
-    public function login($correo, $contrasena){
-    try {
-        $query = "SELECT * FROM usuario WHERE correo = :correo";
-        $stmt = $this->conexion->prepare($query);
-        $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
-        $stmt->execute();
-        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function login($correo, $contrasena)
+    {
+        try {
+            $query = "SELECT * FROM usuario WHERE correo = :correo";
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
+            $stmt->execute();
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($usuario) {
-            if ($usuario['tipoDeUsuario'] == 'Administrador') {
-            // Permitir acceso al administrador sin verificar contraseña
-            return $usuario;
-            } 
-            if (password_verify($contrasena, $usuario['contrasena'])) {
-                if(isset($usuario['cedula'])){
-                    $usuario['cedula'] = $this->decryptData($usuario['cedula']);
+            if ($usuario) {
+                if ($usuario['tipoDeUsuario'] == 'Administrador') {
+                    // Permitir acceso al administrador sin verificar contraseña
+                    return $usuario;
                 }
-                return $usuario;
-            } else {
-            return false; // Contraseña incorrecta
+                if (password_verify($contrasena, $usuario['contrasena'])) {
+                    if (isset($usuario['cedula'])) {
+                        $usuario['cedula'] = $this->decryptData($usuario['cedula']);
+                    }
+                    return $usuario;
+                } else {
+                    return false; // Contraseña incorrecta
+                }
             }
+
+
+            return false; // Usuario no encontrado
+        } catch (PDOException $ex) {
+            echo 'Error al loguear usuario: ' . $ex->getMessage();
+            return false;
         }
-
-
-        return false; // Usuario no encontrado
-    } catch (PDOException $ex) {
-        echo 'Error al loguear usuario: ' . $ex->getMessage();
-        return false;
     }
-}
 
 
 
-    public function selectAll($estado){
-        try{
+    public function selectAll($estado)
+    {
+        try {
             $query = "SELECT * FROM usuario WHERE Estado = :estado";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
@@ -50,7 +54,7 @@ class UsuarioDAO{
             $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $usuarios = [];
-            foreach($resultados as $resultado){
+            foreach ($resultados as $resultado) {
                 $usuario = new Usuario();
                 $usuario->setId($resultado['id_Usuario']);
                 $usuario->setNombres($resultado['nombres']);
@@ -63,14 +67,15 @@ class UsuarioDAO{
                 $usuarios[] = $usuario;
             }
             return $usuarios;
-        }catch(PDOException $ex){
-            echo 'Error al listar usuarios: '.$ex->getMessage();
+        } catch (PDOException $ex) {
+            echo 'Error al listar usuarios: ' . $ex->getMessage();
             return [];
         }
     }
 
-    public function selectById($id){
-        try{
+    public function selectById($id)
+    {
+        try {
             $query = "SELECT * FROM usuario WHERE id_Usuario = :id";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -78,13 +83,14 @@ class UsuarioDAO{
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $resultado;
-        }catch(PDOException $ex){
-            echo 'Error al buscar usuario por id: '.$ex->getMessage();
+        } catch (PDOException $ex) {
+            echo 'Error al buscar usuario por id: ' . $ex->getMessage();
             return null;
         }
     }
-    public function insertUser($usuario, $contrasena){
-        try{
+    public function insertUser($usuario, $contrasena)
+    {
+        try {
             $query = "INSERT INTO Usuario (nombres, correo, cedula, telefono, direccion, tipoDeUsuario, estado, contrasena) 
                     VALUES (:nombres, :correo, :cedula, :telefono, :direccion, :tipoDeUsuario, :estado, :contrasena)";
             $stmt = $this->conexion->prepare($query);
@@ -105,7 +111,7 @@ class UsuarioDAO{
             // Encriptar la contraseña
             $hashedPassword = password_hash($contrasena, PASSWORD_BCRYPT);
 
-            if($this->selectByCorreo($correo)){
+            if ($this->selectByCorreo($correo)) {
                 echo "El correo ya está registrado.";
                 return false;
             }
@@ -120,18 +126,19 @@ class UsuarioDAO{
             $stmt->bindParam(':contrasena', $hashedPassword, PDO::PARAM_STR);
 
             $res = $stmt->execute();
-            
+
 
             return $res;
-        }catch(PDOException $ex){
-            echo 'Error al insertar usuario: '.$ex->getMessage();
+        } catch (PDOException $ex) {
+            echo 'Error al insertar usuario: ' . $ex->getMessage();
             return false;
         }
     }
 
-    
 
-    public function updateUser($usuario){
+
+    public function updateUser($usuario)
+    {
         try {
             $sql = "UPDATE usuario 
                     SET nombres = :nombres, correo = :correo, cedula = :cedula, 
@@ -155,75 +162,54 @@ class UsuarioDAO{
     }
 
     // Eliminar un usuario por su ID (borrado físico)
-    public function deleteUser($id){
-        try{
+    public function deleteUser($id)
+    {
+        try {
             $query = "DELETE FROM usuario WHERE id_Usuario = :id";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $res = $stmt->execute();
             return $res;
-        }catch(PDOException $ex){
-            echo 'Error al eliminar usuario: '.$ex->getMessage();
+        } catch (PDOException $ex) {
+            echo 'Error al eliminar usuario: ' . $ex->getMessage();
             return false;
         }
     }
 
     //Borrado Lógico de un usuario
-    public function UpdateEstado($id, $estado){
-        try{
+    public function UpdateEstado($id, $estado)
+    {
+        try {
             $query = "UPDATE usuario SET estado = :estado WHERE id_Usuario = :id";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
             $res = $stmt->execute();
             return $res;
-        }catch(PDOException $ex){
-            echo 'Error al actualizar el estado del usuario: '.$ex->getMessage();
+        } catch (PDOException $ex) {
+            echo 'Error al actualizar el estado del usuario: ' . $ex->getMessage();
             return false;
         }
     }
 
     // Método para verificar si el correo ya está registrado
-    function selectByCorreo($correo){
-        try{
+    function selectByCorreo($correo)
+    {
+        try {
             $query = "SELECT COUNT(*) FROM usuario WHERE correo = :correo";
             $stmt = $this->conexion->prepare($query);
             $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchColumn() > 0;
-        }catch(PDOException $ex){
-            echo 'Error al verificar si el correo existe: '.$ex->getMessage();
-            return false;
-        }
-    }
-
-    //Metodo para verificar si la cedula ya está registrada
-    function selectByCedula($cedula){
-        try{
-            $query = "SELECT COUNT(*) FROM usuario WHERE cedula = :cedula";
-            $stmt = $this->conexion->prepare($query);
-
-            $cedulaEncriptada = $this->encryptData($cedula);
-
-            $stmt->bindParam(':cedula', $cedulaEncriptada, PDO::PARAM_STR);
-            $stmt->execute();
-            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if($usuario){
-                if(isset($usuario['cedula'])){
-                    $usuario['cedula'] = $this->decryptData($usuario['cedula']);
-                }
-                return $usuario;
-            }
-            return false; // No se encontró el usuario
-        }catch(PDOException $ex){
-            echo 'Error al verificar si la cédula existe: '.$ex->getMessage();
+        } catch (PDOException $ex) {
+            echo 'Error al verificar si el correo existe: ' . $ex->getMessage();
             return false;
         }
     }
 
     //metodo para encriptar 
-    function encryptData($data) {
+    function encryptData($data)
+    {
         $ivlen = openssl_cipher_iv_length(METHOD);
         $iv = openssl_random_pseudo_bytes($ivlen);
 
@@ -233,11 +219,12 @@ class UsuarioDAO{
     }
 
     //metodo para desencriptar
-    function decryptData($data) {
+    function decryptData($data)
+    {
         $data = base64_decode($data);
 
         $ivlen = openssl_cipher_iv_length(METHOD);
-        if(strlen($data) < $ivlen) {
+        if (strlen($data) < $ivlen) {
             return false; // Datos inválidos
         }
         $iv = substr($data, 0, $ivlen);

@@ -234,19 +234,5 @@ class UsuarioController
         return openssl_decrypt($ciphertext, METHOD, KEY, OPENSSL_RAW_DATA, $iv);
     }
 
-    private function mapToUsuario($data)
-    {
-        $user = new Usuario();
-        $user->setId($data['id_Usuario']);
-        $user->setNombres($data['nombres']);
-        $user->setCorreo($data['correo']);
-        $user->setCedula($data['cedula'] ?? '');
-        $user->setTelefono($data['telefono']);
-        $user->setDireccion($data['direccion']);
-        $user->setTipoDeUsuario($data['tipoDeUsuario']);
-        $user->setEstado($data['Estado']);
-        return $user;
-    }
-
 }
 ?>
